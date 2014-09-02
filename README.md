@@ -1,4 +1,4 @@
 default
 =======
 
-Main repository for development; test environment
+Main repository for development.
