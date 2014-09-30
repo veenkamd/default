@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#33CCFF"
+    tools:context=".BookDetails">
+
+    <ImageView
+        android:layout_width="125dp"
+        android:layout_height="200dp"
+        android:id="@+id/bookCover"
+        android:src="@drawable/catch22" android:scaleType="fitXY"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/bookdetails_title"
+        android:id="@+id/bookTitle"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/titleText"
+        android:layout_toStartOf="@+id/titleText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/bookdetails_author"
+        android:id="@+id/bookAuthor"
+        android:layout_below="@+id/bookTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/bookdetails_collection"
+        android:id="@+id/collectionTag"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/bookAuthor"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/bookdetails_isbn"
+        android:id="@+id/bookIsbn"
+        android:layout_below="@+id/collectionTag"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Catch-22"
+        android:id="@+id/titleText"
+        android:layout_toEndOf="@+id/bookAuthor"
+        android:layout_toRightOf="@+id/bookAuthor"
+        android:layout_alignTop="@+id/bookTitle"
+        android:layout_alignLeft="@+id/collectionText"
+        android:layout_alignStart="@+id/collectionText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Jospeh Heller"
+        android:id="@+id/authorText"
+        android:layout_toEndOf="@+id/bookAuthor"
+        android:layout_toRightOf="@+id/bookAuthor"
+        android:layout_alignTop="@+id/bookAuthor"
+        android:layout_alignLeft="@+id/titleText"
+        android:layout_alignStart="@+id/titleText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Placeholder Collection"
+        android:id="@+id/collectionText"
+        android:layout_above="@+id/bookIsbn"
+        android:layout_toRightOf="@+id/collectionTag"
+        android:layout_toEndOf="@+id/collectionTag"
+        android:layout_marginLeft="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="978-1451626650"
+        android:id="@+id/isbnText"
+        android:layout_toEndOf="@+id/bookAuthor"
+        android:layout_toRightOf="@+id/bookAuthor"
+        android:layout_alignTop="@+id/bookIsbn"
+        android:layout_alignLeft="@+id/collectionText"
+        android:layout_alignStart="@+id/collectionText" />
+
+</RelativeLayout>
