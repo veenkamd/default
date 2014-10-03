@@ -25,10 +25,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/home_button_collections"
-        android:id="@+id/goToLibrary"
+        android:id="@+id/buttonGoToLibrary"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/scanBook"
+        android:layout_above="@+id/buttonScanBook"
         android:background="#ff5ff4ff"
         android:textColor="@android:color/white"
         android:textStyle="bold"
@@ -36,18 +36,18 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:height="60dp"
-        android:clickable="false" />
+        android:clickable="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/home_button_scanBook"
-        android:id="@+id/scanBook"
-        android:layout_above="@+id/searchBook"
+        android:id="@+id/buttonScanBook"
+        android:layout_above="@+id/buttonSearchBook"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/goToLibrary"
-        android:layout_alignEnd="@+id/goToLibrary"
+        android:layout_alignRight="@+id/buttonGoToLibrary"
+        android:layout_alignEnd="@+id/buttonGoToLibrary"
         android:background="#ff5ff4ff"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -58,8 +58,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/home_button_searchBook"
-        android:id="@+id/searchBook"
-        android:layout_above="@+id/settings"
+        android:id="@+id/buttonSearchBook"
+        android:layout_above="@+id/buttonSettings"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -68,23 +68,25 @@
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:height="60dp" />
+        android:height="60dp"
+        android:clickable="true"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/home_button_settings"
-        android:id="@+id/settings"
+        android:id="@+id/buttonSettings"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/searchBook"
-        android:layout_alignEnd="@+id/searchBook"
+        android:layout_alignRight="@+id/buttonSearchBook"
+        android:layout_alignEnd="@+id/buttonSearchBook"
         android:background="#ff5ff4ff"
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:height="60dp" />
+        android:height="60dp"
+        android:clickable="true"/>
 
     <TextView
         android:layout_width="fill_parent"
@@ -95,7 +97,7 @@
         android:textColor="@android:color/white"
         android:textAlignment="center"
         android:textSize="26sp"
-        android:layout_above="@+id/goToLibrary"
+        android:layout_above="@+id/buttonGoToLibrary"
         android:layout_marginBottom="39dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -106,7 +108,7 @@
         android:layout_height="fill_parent"
         android:id="@+id/imageView"
         android:src="@drawable/app_title"
-        android:contentDescription="@string/description"
+        android:contentDescription="@string/home_appDescription"
         android:layout_alignBottom="@+id/title_line2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

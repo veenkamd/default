@@ -1,36 +1,26 @@
-package com.example.merqurius;
+package com.merqurius.book.details;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.merqurius.R;
 
-public class HomeScreen extends Activity {
 
-    /* For strings.xml file
-    <string name="home_app_name">Merqurius</string>
-    <string name="home_titleLine1">Welcome to</string>
-    <string name="home_button_collections">View My Collections</string>
-    <string name="home_button_scanBook">Scan a New Book</string>
-    <string name="home_button_searchBook">Search for a Book</string>
-    <string name="home_button_settings">ViewSettings</string>
-    <string name="home_titleLine2">Your personal library manager</string>
-    <string name="home_appDescription">The title of the application</string>
-     */
-
+public class BookDetailsScreen extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_screen);
+        setContentView(R.layout.activity_book_details_screen);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_screen, menu);
+        getMenuInflater().inflate(R.menu.book_details_screen, menu);
         return true;
     }
 

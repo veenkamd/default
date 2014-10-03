@@ -1,36 +1,36 @@
-package com.example.merqurius;
+package com.merqurius.search;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.merqurius.R;
 
 
-public class HomeScreen extends Activity {
+public class SearchScreen extends Activity {
 
-    /* For strings.xml file
-    <string name="home_app_name">Merqurius</string>
-    <string name="home_titleLine1">Welcome to</string>
-    <string name="home_button_collections">View My Collections</string>
-    <string name="home_button_scanBook">Scan a New Book</string>
-    <string name="home_button_searchBook">Search for a Book</string>
-    <string name="home_button_settings">ViewSettings</string>
-    <string name="home_titleLine2">Your personal library manager</string>
-    <string name="home_appDescription">The title of the application</string>
-     */
-
+    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_screen);
+        setContentView(R.layout.search_activity);
     }
 
+   /* //Called when the user clicks the send button
+    public void sendMessage(View view){
+        //do something in response to the button
+        //Intent intent = new Intent(this, DisplayMessageActivity.class);
+        EditText editText = (EditText) findViewById(R.id.title_text);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_screen, menu);
+        getMenuInflater().inflate(R.menu.global, menu);
         return true;
     }
 
