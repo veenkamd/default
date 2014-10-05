@@ -19,7 +19,7 @@ public class HomeScreen extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_screen);
+        setContentView(R.layout.activity_home);
 
         collections = (Button) findViewById(R.id.buttonGoToLibrary);
         search = (Button) findViewById(R.id.buttonSearchBook);
@@ -51,9 +51,6 @@ public class HomeScreen extends Activity implements View.OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
