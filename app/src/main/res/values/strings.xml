@@ -13,7 +13,7 @@
     <string name="home_button_collections">View My Collections</string>
     <string name="home_button_scanBook">Scan a New Book</string>
     <string name="home_button_searchBook">Search for a Book</string>
-    <string name="home_button_settings">ViewSettings</string>
+    <string name="home_button_settings">Book Details</string>
     <string name="home_titleLine2">Your personal library manager</string>
     <string name="home_appDescription">The title of the application</string>
     <string name="author_text">Author...</string>
