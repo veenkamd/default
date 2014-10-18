@@ -20,7 +20,7 @@
     <string name="title_text">Title...</string>
     <string name="genre_text">Genre...</string>
     <string name="isbn_text">ISBN...</string>
-    <string name="button_send">Search</string>
+    <string name="button_send">     Search     </string>
     <string name="title_activity_base">baseActivity</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
