@@ -14,6 +14,8 @@ import android.widget.EditText;
 import com.merqurius.R;
 import com.merqurius.search.SearchResultsScreen;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -52,9 +54,8 @@ public class SearchScreen extends Activity implements View.OnClickListener {
                 String q = buildQuery(title, author, genre, isbn);
                 String r = fetchResults(q);
 
-
-
                 Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
+                searchResultsIntent.putExtra("response", r);
                 startActivityForResult(searchResultsIntent, 0);
                 break;
         }
@@ -104,7 +105,20 @@ public class SearchScreen extends Activity implements View.OnClickListener {
                 connection.disconnect();
                 throw new Exception();
             }*/
+            // Read data from response.
+            StringBuilder builder = new StringBuilder();
+            BufferedReader responseReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line = responseReader.readLine();
+            while (line != null){
+                builder.append(line);
+                line = responseReader.readLine();
+            }
+            String response = builder.toString();
+            connection.disconnect();
+            return response;
+
         } catch (Exception e){
+            connection.disconnect();
             new AlertDialog.Builder(this)
                     //.setTitle("Search Terms")
                     .setMessage("Unable to connect.")

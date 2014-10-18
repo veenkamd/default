@@ -6,16 +6,25 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.merqurius.R;
 
 
 public class SearchResultsScreen extends Activity {
 
+    String r;
+    Button result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+
+        Intent searchResultsIntent = getIntent();
+        r = searchResultsIntent.getStringExtra("response");
+        result = (Button) findViewById(R.id.buttonGoToResultDetail);
+        result.setText(r);
     }
 
     @Override

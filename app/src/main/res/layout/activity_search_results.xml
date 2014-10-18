@@ -22,36 +22,4 @@
         android:layout_marginTop="12dp"
         android:clickable="true" />
 
-    <EditText android:id="@+id/title_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="#ffffffff"
-        android:layout_marginTop="12dp"
-        android:hint="@string/title_text" />
-
-    <EditText android:id="@+id/author_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="#ffffffff"
-        android:layout_marginTop="12dp"
-        android:hint="@string/author_text" />
-
-    <EditText android:id="@+id/genre_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="#ffffffff"
-        android:layout_marginTop="12dp"
-        android:hint="@string/genre_text" />
-
-    <EditText android:id="@+id/isbn_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColorHint="#ffffffff"
-        android:layout_marginTop="12dp"
-        android:hint="@string/isbn_text" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_send" />
 </LinearLayout>
