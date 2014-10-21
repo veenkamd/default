@@ -73,25 +73,30 @@ public class SearchScreen extends Activity implements View.OnClickListener {
         if(t.length() > 0){
             if(termsAdded) query += "+";
             else termsAdded = true;
+            t = t.replaceAll(" ", ",");
             query += "intitle:" + t;
         }
         if(a.length() > 0){
             if(termsAdded) query += "+";
             else termsAdded = true;
+            a = a.replaceAll(" ", ",");
             query += "inauthor:" + a;
         }
         if(g.length() > 0){
             if(termsAdded) query += "+";
             else termsAdded = true;
+            g = g.replaceAll(" ", ",");
             query += "insubject:" + g;
         }
         if(i.length() > 0){
             if(termsAdded) query += "+";
             else termsAdded = true;
+            i = i.replaceAll(" ", ",");
             query += "isbn:" + i;
         }
 
-        query += "&key=AIzaSyBWUqhTT8y4aC9hyFgjenA3lhqi1cnV0R0&fields=items(volumeInfo/title,volumeInfo/authors)";
+        query += "&key=AIzaSyBWUqhTT8y4aC9hyFgjenA3lhqi1cnV0R0&fields=items(volumeInfo"
+                + "/title,volumeInfo/authors,volumeInfo/industryIdentifiers)";
 
         return query;
     }

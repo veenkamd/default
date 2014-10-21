@@ -1,18 +1,14 @@
 package com.merqurius.search;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by daniel on 10/20/14.
- */
+
 public class SearchInet extends AsyncTask<String, Void, String> {
 
     Context context;
@@ -36,16 +32,9 @@ public class SearchInet extends AsyncTask<String, Void, String> {
 
 
         } catch (IOException e){
-            Log.d(getClass().getName(), "IO Exception." + query[0]);
+            Log.d(getClass().getName(), "IO Exception. " + query[0]);
 
-           /* String error = "Unable to connect.";
 
-            if(e.getMessage() != null)
-                error = e.getMessage();
-
-            new AlertDialog.Builder(context)
-                    .setMessage(error)
-                    .show();*/
         }
 
         return response;
