@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,11 +16,15 @@ import com.merqurius.R;
 import com.merqurius.search.SearchResultsScreen;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 public class SearchScreen extends Activity implements View.OnClickListener {
 
@@ -53,10 +58,11 @@ public class SearchScreen extends Activity implements View.OnClickListener {
 
                 String q = buildQuery(title, author, genre, isbn);
                 String r = fetchResults(q);
-
-                Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
-                searchResultsIntent.putExtra("response", r);
-                startActivityForResult(searchResultsIntent, 0);
+                if(r.length() > 0) {
+                    Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
+                    searchResultsIntent.putExtra("response", r);
+                    startActivityForResult(searchResultsIntent, 0);
+                }
                 break;
         }
     }
@@ -85,58 +91,22 @@ public class SearchScreen extends Activity implements View.OnClickListener {
             query += "isbn:" + i;
         }
 
-        query += "&key=AIzaSyBWUqhTT8y4aC9hyFgjenA3lhqi1cnV0R0";
+        query += "&key=AIzaSyBWUqhTT8y4aC9hyFgjenA3lhqi1cnV0R0&fields=items(volumeInfo/title,volumeInfo/authors)";
 
         return query;
     }
 
-    private String fetchResults(String query){
-        HttpURLConnection connection = null;
-        // Build Connection.
+    private String fetchResults(String query) {
         try {
-            URL url = new URL(query);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setReadTimeout(5000); // 5 seconds
-            connection.setConnectTimeout(5000); // 5 seconds
-            /*int responseCode = connection.getResponseCode();
-            if(responseCode != 200){
-                //Log.w(getClass().getName(), "GoogleBooksAPI request failed. Response Code: " + responseCode);
-                connection.disconnect();
-                throw new Exception();
-            }*/
-            // Read data from response.
-            StringBuilder builder = new StringBuilder();
-            BufferedReader responseReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String line = responseReader.readLine();
-            while (line != null){
-                builder.append(line);
-                line = responseReader.readLine();
-            }
-            String response = builder.toString();
-            connection.disconnect();
-            return response;
-
-        } catch (Exception e){
-            connection.disconnect();
-            new AlertDialog.Builder(this)
-                    //.setTitle("Search Terms")
-                    .setMessage("Unable to connect.")
-                            /*.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // do nothing
-                                }
-                            })*/
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+            return new SearchInet(this).execute(query).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
 
-        return "";
+
+        return "Unable to Connect";
     }
 
     @Override
