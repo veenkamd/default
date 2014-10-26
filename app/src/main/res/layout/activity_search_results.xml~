@@ -1,0 +1,30 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="#ff2889ff">
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <LinearLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/layout_search_results"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff2889ff"
+            android:orientation="vertical">
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+=======
+<ListView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/searchResultList"
+    android:background="#ff2889ff"
+    android:choiceMode="singleChoice"></ListView>
+>>>>>>> b14e30d4ce76b719808920b52dc5c9b557c2703c
