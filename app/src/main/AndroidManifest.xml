@@ -14,22 +14,36 @@
             android:name=".book.details.BookDetailsScreen"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name=".home.HomeScreen"
+        <activity
+            android:name=".home.HomeScreen"
             android:label="Home" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".collections.CollectionsScreen"
+        <activity
+            android:name=".collections.CollectionsScreen"
             android:label="Collections" >
-            </activity>
-        <activity android:name=".search.SearchScreen"
+        </activity>
+        <activity
+            android:name=".search.SearchScreen"
             android:label="Search" >
-            </activity>
         <activity android:name=".search.SearchResultsScreen"
             android:label="Search Results" >
+        </activity>
+        <activity
+            android:name=".book.details.EmailScreen"
+            android:label="@string/title_activity_email_screen"
+            android:parentActivityName=".book.details.BookDetailsScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.merqurius.book.details.BookDetailsScreen" />
+        </activity>
+        <activity
+            android:name=".search.SearchResults"
+            android:label="@string/title_activity_search_results" >
         </activity>
     </application>
 

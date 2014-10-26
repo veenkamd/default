@@ -1,19 +1,35 @@
 package com.merqurius.book.details;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.merqurius.R;
 
 
-public class BookDetailsScreen extends Activity {
+public class BookDetailsScreen extends Activity implements View.OnClickListener {
+    Button remind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details_screen);
+
+        remind = (Button) findViewById(R.id.buttonRemind);
+
+        remind.setOnClickListener(this);
+    }
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonRemind:
+                Intent remindIntent = new Intent(v.getContext(), EmailScreen.class);
+                startActivityForResult(remindIntent, 0);
+                break;
+        }
     }
 
 
