@@ -30,6 +30,7 @@
         <activity
             android:name=".search.SearchScreen"
             android:label="Search" >
+        </activity>
         <activity android:name=".search.SearchResultsScreen"
             android:label="Search Results" >
         </activity>
