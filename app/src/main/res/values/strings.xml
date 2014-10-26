@@ -18,7 +18,7 @@
     <string name="home_appDescription">The title of the application</string>
     <string name="author_text">Author...</string>
     <string name="title_text">Title...</string>
-    <string name="genre_text">Genre...</string>
+    <string name="genre_text">Subject...</string>
     <string name="isbn_text">ISBN...</string>
     <string name="button_send">     Search     </string>
     <string name="title_activity_base">baseActivity</string>

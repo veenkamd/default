@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -41,9 +42,13 @@ public class SearchScreen extends Activity implements View.OnClickListener {
         search.setOnClickListener(this);
 
         titlebox = (EditText) findViewById(R.id.title_text);
+        titlebox.setTextColor(Color.WHITE);
         authorbox = (EditText) findViewById(R.id.author_text);
+        authorbox.setTextColor(Color.WHITE);
         genrebox = (EditText) findViewById(R.id.genre_text);
+        genrebox.setTextColor(Color.WHITE);
         isbnbox = (EditText) findViewById(R.id.isbn_text);
+        isbnbox.setTextColor(Color.WHITE);
 
     }
 
@@ -58,10 +63,15 @@ public class SearchScreen extends Activity implements View.OnClickListener {
 
                 String q = buildQuery(title, author, genre, isbn);
                 String r = fetchResults(q);
-                if(r.length() > 0) {
+                if(! r.equals("Unable to Connect")) {
                     Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
+                    searchResultsIntent.putExtra("query", q);
                     searchResultsIntent.putExtra("response", r);
                     startActivityForResult(searchResultsIntent, 0);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(r);
+                    builder.show();
                 }
                 break;
         }

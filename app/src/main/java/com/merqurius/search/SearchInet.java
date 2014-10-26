@@ -33,7 +33,7 @@ public class SearchInet extends AsyncTask<String, Void, String> {
 
         } catch (IOException e){
             Log.d(getClass().getName(), "IO Exception. " + query[0]);
-
+            return "Unable to Connect";
 
         }
 
