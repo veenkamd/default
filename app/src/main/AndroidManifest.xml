@@ -38,6 +38,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.merqurius.book.details.BookDetailsScreen" />
         </activity>
+        <activity
+            android:name=".search.SearchResults"
+            android:label="@string/title_activity_search_results" >
+        </activity>
     </application>
 
 </manifest>
