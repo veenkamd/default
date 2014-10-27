@@ -35,7 +35,7 @@ public class EmailScreen extends Activity implements View.OnClickListener {
             case R.id.buttonSend:
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
-                i.putExtra(Intent.EXTRA_EMAIL  , address.getText().toString());
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{address.getText().toString()} );
                 i.putExtra(Intent.EXTRA_SUBJECT, "YOU HAVE MY BOOK!");
                 i.putExtra(Intent.EXTRA_TEXT   , message.getText().toString());
                 try {
