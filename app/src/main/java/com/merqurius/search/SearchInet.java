@@ -27,8 +27,10 @@ public class SearchInet extends AsyncTask<String, Void, String> {
             Log.d(getClass().getName(), "Attempting to connect...");
             InputStream responseStream = new URL(query[0]).openStream();
             Log.d(getClass().getName(), "Connection established.");
+            Log.d(getClass().getName(), "Query is: " + query[0]);
 
             response = streamToString(responseStream);
+            Log.d(getClass().getName(), "Response received.");
 
 
         } catch (IOException e){

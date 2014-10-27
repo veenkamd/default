@@ -67,6 +67,7 @@ public class SearchScreen extends Activity implements View.OnClickListener {
                     Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
                     searchResultsIntent.putExtra("query", q);
                     searchResultsIntent.putExtra("response", r);
+                    Log.d(getClass().getName(), "Forwarding to results screen.");
                     startActivityForResult(searchResultsIntent, 0);
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);

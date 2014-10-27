@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -132,6 +133,7 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             tok = st.nextToken();
 
         for(int i = 0; i < 10; i++){
+            Log.d(getClass().getName(), "Processing book " + i + "...");
 
             if(endList)
                 titles[i] = null;
@@ -192,8 +194,8 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                                 }
                                 tok = st.nextToken();
                             }
-                            /*if (!st.hasMoreTokens())
-                                break;*/
+                            if (!st.hasMoreTokens())
+                                break;
                             if(tok.equals("type")) {
                                 tok = st.nextToken();
                                 tok = st.nextToken();
@@ -220,6 +222,7 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
 
 
             }
+            Log.d(getClass().getName(), "...Done.");
         }
     }
 
