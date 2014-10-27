@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 
 
@@ -18,3 +19,12 @@
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
+=======
+<ListView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/searchResultList"
+    android:background="#ff2889ff"
+    android:choiceMode="singleChoice"></ListView>
+>>>>>>> b14e30d4ce76b719808920b52dc5c9b557c2703c

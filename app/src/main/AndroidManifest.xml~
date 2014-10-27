@@ -30,9 +30,11 @@
         <activity
             android:name=".search.SearchScreen"
             android:label="Search" >
-        </activity>
+<<<<<<< HEAD
+            </activity>
         <activity android:name=".search.SearchResultsScreen"
             android:label="Search Results" >
+=======
         </activity>
         <activity
             android:name=".book.details.EmailScreen"
@@ -45,6 +47,7 @@
         <activity
             android:name=".search.SearchResults"
             android:label="@string/title_activity_search_results" >
+>>>>>>> a17678e0a9f1784b91d95ae14925ed2ae36070e5
         </activity>
     </application>
 
