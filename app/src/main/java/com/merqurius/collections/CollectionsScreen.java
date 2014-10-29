@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.merqurius.Database;
+import com.merqurius.MySQLiteHelper;
 import com.merqurius.test.Book;
 import com.merqurius.R;
 
@@ -12,6 +14,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.LayoutInflater;
@@ -74,47 +78,14 @@ public class CollectionsScreen extends Activity {
         collectionDataHeader = new ArrayList<String>();
         collectionDataChild = new HashMap<String, List<String>>();
 
-        List<Book> testBooks = new ArrayList<Book>();
-        for(int i = 1; i < 4; i++) {
-            testBooks.add(new Book());
+        collectionDataHeader = getAllCollections();
+
+        //Add the books to the collections map
+        for(int i = 0; i < collectionDataHeader.size(); i++){
+            String collectionName = collectionDataHeader.get(i);
+            List<String> titles = getBookTitlesForCollection(collectionName);
+            collectionDataChild.put(collectionName, titles);
         }
-
-        // Adding header data
-        //Swap out with:
-        //  collectionDataHeader = getAllCollections();
-        collectionDataHeader.add("First Collection");
-        collectionDataHeader.add("Second Collection");
-        collectionDataHeader.add("Third Collection");
-
-
-        // Adding child data
-        List<String> first = new ArrayList<String>();
-        first.add(testBooks.get(0).getTitle());
-        first.add(testBooks.get(0).getTitle());
-        first.add(testBooks.get(0).getTitle());
-
-        List<String> second = new ArrayList<String>();
-        second.add(testBooks.get(1).getTitle());
-        second.add(testBooks.get(1).getTitle());
-        second.add(testBooks.get(1).getTitle());
-
-        List<String> third = new ArrayList<String>();
-        third.add(testBooks.get(2).getTitle());
-        third.add(testBooks.get(2).getTitle());
-        third.add(testBooks.get(2).getTitle());
-
-        collectionDataChild.put(collectionDataHeader.get(0), first); // Header, Child data
-        collectionDataChild.put(collectionDataHeader.get(1), second);
-        collectionDataChild.put(collectionDataHeader.get(2), third);
-
-        /* Actual implementation once database tasks are done:
-
-           for(int i = 0; i < collectionDataHeader.length; i++){
-               String collectionName = collectionDataHeader.get(i);
-               List<String> titles = getBookTitlesForCollection(collectionName);
-               collectionDataChild.put(collectionName, titles);
-           }
-         */
     }
 
     private void prepareListView(){
@@ -225,57 +196,31 @@ public class CollectionsScreen extends Activity {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             }
-
-                /*
-
-                The following methods will be put in place when the database class we need is done
-
-
-                public void insertCollection(String collectionName) throws SomeException {
-                    SQLiteDatabase db = this.getWritableDatabase();
-                    ContentValues cv = new ContentValues();
-                    cv.put(Database.COLLECTION_ID, null);
-                    cv.put(Database.COLLECTION, collectionName);
-                    db.insertOrThrow(Database.COLLECTION_TBL, null, cv);
-                    db.close();
-                }
-
-                public Cursor selectAllCollections(){
-                       SQLiteDatabase db = this.getReadableDatabase();
-                       return db.rawQuery(Database.SELECT_ALL_COLLECTIONS, new String[]{});
-                }
-
-                protected List getAllCollections(){
-                    SQLiteDatabase db = new SQLiteDatabaseCustomClass();
-                    Cursor cursor = db.selectAllCollections();
-
-                    List<String> collections = new ArrayList<String>();
-                    while(cursor.moveToNext()){
-                        collections.add(cursor.getColumnIndex(Database.COLLECTION));
-                    }
-
-                    return collections;
-                }
-
-                public Cursor selectBookTitlesByCollection(String collectionName){
-                    SQLiteDatabase db = this.getReadableDatabase();
-                    return db.rawQuery(SELECT_BOOK_TITLES_FOR_COLLECTION,new String[]{collectionName});
-                }
-
-                protected List getBookTitlesForCollection(String collectionName){
-                    SQLiteDatabase db = new SQLiteDatabaseCustomClass();
-                    Cursor cursor = db.selectBookTitlesByCollection(collectionName);
-
-                    List<String> titles = new ArrayList<String>();
-                    while(cursor.moveToNext()){
-                        titles.add(cursor.getColumnIndex(Database.TITLE));
-                    }
-
-                    return titles;
-                }
-
-
-                */
         });
+    }
+
+    protected List getAllCollections(){
+        MySQLiteHelper db = new MySQLiteHelper(context);
+        Cursor cursor = db.selectAllCollections();
+
+        List<String> collections = new ArrayList<String>();
+        while(cursor.moveToNext()){
+            int columnIndex = cursor.getColumnIndex(Database.COLLECTION);
+            collections.add(cursor.getString(columnIndex));
+        }
+        return collections;
+    }
+
+    protected List getBookTitlesForCollection(String collectionName){
+        MySQLiteHelper db = new MySQLiteHelper(context);
+        Cursor cursor = db.selectBookTitlesByCollection(collectionName);
+
+        List<String> titles = new ArrayList<String>();
+        while(cursor.moveToNext()){
+            int columnIndex = cursor.getColumnIndex(Database.TITLE);
+            titles.add(cursor.getString(columnIndex));
+        }
+
+        return titles;
     }
 }

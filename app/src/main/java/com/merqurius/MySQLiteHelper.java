@@ -1,6 +1,8 @@
 package com.merqurius;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -63,5 +65,24 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + BOOK_TBL);
         db.execSQL("DROP TABLE IF EXISTS " + COLLECTION_TBL);
         onCreate(db);
+    }
+
+    public void insertCollection(String collectionName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLLECTION_ID, "");
+        cv.put(COLLECTION, collectionName);
+        db.insertOrThrow(COLLECTION_TBL, null, cv);
+        db.close();
+    }
+
+    public Cursor selectAllCollections(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(Database.SELECT_ALL_COLLECTIONS, new String[]{});
+    }
+
+    public Cursor selectBookTitlesByCollection(String collectionName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(Database.SELECT_BOOK_TITLES_FOR_COLLECTION,new String[]{collectionName});
     }
 }
