@@ -18,6 +18,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -179,10 +180,9 @@ public class CollectionsScreen extends Activity {
                                     public void onClick(DialogInterface dialog,int id) {
                                         String newCollection = userInput.getText().toString();
 
-                                        //TODO: Remove this comment to finish implementing
-                                        /*SQLiteDatabase db = new SQLiteCustomDatabase();
+                                        MySQLiteHelper db = new MySQLiteHelper(context);
                                           db.insertCollection(newCollection);
-                                         */
+
                                     }
                                 })
                         .setNegativeButton("Cancel",
@@ -205,7 +205,8 @@ public class CollectionsScreen extends Activity {
 
         List<String> collections = new ArrayList<String>();
         while(cursor.moveToNext()){
-            int columnIndex = cursor.getColumnIndex(Database.COLLECTION);
+            int columnIndex = cursor.getColumnIndex(Database.COLLECTION_NAME);
+            Log.d(getClass().getName(), "column index: " + columnIndex);
             collections.add(cursor.getString(columnIndex));
         }
         return collections;

@@ -25,5 +25,5 @@ public final class Database {
     //Queries
     public static final String SELECT_ALL_COLLECTIONS = "SELECT * FROM collection";
     public static final String SELECT_BOOK_TITLES_FOR_COLLECTION =
-            "SELECT title FROM book WHERE collection_name = ?";
+            "SELECT title FROM book WHERE collection = ?";
 }

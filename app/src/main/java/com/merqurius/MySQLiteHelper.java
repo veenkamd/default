@@ -45,7 +45,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_COLLECTION = "create table " + COLLECTION_TBL + "("
             + COLLECTION_ID + " integer primary key, "
-            + COLLECTION_NAME + "varchar(25));";
+            + COLLECTION_NAME + " varchar(25));";
 
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -70,8 +70,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void insertCollection(String collectionName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(COLLECTION_ID, "");
-        cv.put(COLLECTION, collectionName);
+        cv.put(COLLECTION_NAME, collectionName);
+        //cv.put(COLLECTION_ID, "");
         db.insertOrThrow(COLLECTION_TBL, null, cv);
         db.close();
     }
