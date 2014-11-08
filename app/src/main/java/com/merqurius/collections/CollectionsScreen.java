@@ -183,6 +183,9 @@ public class CollectionsScreen extends Activity {
                                         MySQLiteHelper db = new MySQLiteHelper(context);
                                           db.insertCollection(newCollection);
 
+                                        Intent intent = getIntent();
+                                        finish();
+                                        startActivity(intent);
                                     }
                                 })
                         .setNegativeButton("Cancel",

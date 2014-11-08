@@ -1,18 +1,36 @@
 package com.merqurius.book.details;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
+import com.merqurius.Database;
+import com.merqurius.MySQLiteHelper;
 import com.merqurius.R;
+import com.merqurius.test.Book;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BookDetailsScreen extends Activity implements View.OnClickListener {
-    Button remind;
+    Button remind, addBook, moveBook;
+    Spinner collectionSpinner;
+    Book book;
+
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +38,22 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         setContentView(R.layout.activity_book_details_screen);
 
         remind = (Button) findViewById(R.id.buttonRemind);
+        addBook = (Button) findViewById(R.id.buttonCollection);
+        /*Going to need something here like:
+        if(book != null && !Strings.isEmpty(book.getCollection())){
+            moveBook = (Button) findViewById(R.id.buttonMoveCollection);
+        } else {
+            addBook = (Button) findViewByID(R.id.buttonCollection);
+        }
+
+        I'm not currently going to implement this because I'm not sure what we're going to do
+        about possibly removing a book
+         */
+
+        collectionSpinner = createSpinner();
 
         remind.setOnClickListener(this);
+        addListenerOnAddBookButton();
     }
     public void onClick(View v) {
         switch (v.getId()) {
@@ -50,5 +82,117 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addListenerOnAddBookButton() {
+        addBook = (Button) findViewById(R.id.buttonCollection);
+
+        addBook.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // get book_details_add_prompt.xml view
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.book_details_add_prompt, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                // set book_details_add_prompt.xml to alertDialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(true)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        insertBook(String.valueOf(collectionSpinner.getSelectedItem()));
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+    }
+
+    public void addListenerOnMoveBookButton() {
+        moveBook = (Button) findViewById(R.id.buttonCollection);
+
+        moveBook.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // get book_details_add_prompt.xml view
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.book_details_add_prompt, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                // set book_details_add_prompt.xml to alertDialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(true)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        updateBook(String.valueOf(collectionSpinner.getSelectedItem()));
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
+    }
+
+    protected List getAllCollections(){
+        MySQLiteHelper db = new MySQLiteHelper(context);
+        Cursor cursor = db.selectAllCollections();
+
+        List<String> collections = new ArrayList<String>();
+        while(cursor.moveToNext()){
+            int columnIndex = cursor.getColumnIndex(Database.COLLECTION_NAME);
+            Log.d(getClass().getName(), "column index: " + columnIndex);
+            collections.add(cursor.getString(columnIndex));
+        }
+        return collections;
+    }
+
+    private void insertBook(String collectionName){
+        MySQLiteHelper db = new MySQLiteHelper(context);
+        db.insertBook(collectionName, this.book);
+    }
+
+    private void updateBook(String collectionName){
+        MySQLiteHelper db = new MySQLiteHelper(context);
+        db.moveBook(collectionName, this.book);
+    }
+
+    private Spinner createSpinner(){
+        Spinner spin = (Spinner) findViewById(R.id.collectionSpinner);
+        List collections = getAllCollections();
+
+        ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(BookDetailsScreen.this,  android.R.layout.simple_spinner_item, collections);
+        adapter_state.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(adapter_state);
+
+        return spin;
     }
 }
