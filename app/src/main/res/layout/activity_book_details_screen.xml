@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Jospeh Heller"
+        android:text="Joseph Heller"
         android:id="@+id/authorText"
         android:textColor="#ffffffff"
         android:gravity="right"

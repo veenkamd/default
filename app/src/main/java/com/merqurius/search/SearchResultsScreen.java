@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
 import java.util.concurrent.ExecutionException;
 
 import com.merqurius.R;
+import com.merqurius.book.details.BookDetailsScreen;
 
 
 public class SearchResultsScreen extends Activity implements View.OnClickListener{
@@ -291,14 +292,22 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             }
         } else {
             int i = v.getId();
-            String m = "Author: " + authors[i] + "\nTitle: " + titles[i] + "\nISBN: ";
+            /*String m = "Author: " + authors[i] + "\nTitle: " + titles[i] + "\nISBN: ";
             if(isbns[i] == null)
                 m += "None";
             else
                 m += isbns[i];
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(m);
-            builder.show();
+            builder.show();*/
+
+
+            Intent detailsIntent = new Intent (v.getContext(), BookDetailsScreen.class);
+            detailsIntent.putExtra("author", authors[i]);
+            detailsIntent.putExtra("title", titles[i]);
+            detailsIntent.putExtra("isbn", isbns[i]);
+            startActivityForResult(detailsIntent, 0);
+
         }
     }
 

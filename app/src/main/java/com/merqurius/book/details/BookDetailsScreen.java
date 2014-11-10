@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.merqurius.Database;
 import com.merqurius.MySQLiteHelper;
@@ -29,13 +30,42 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
     Button remind, addBook, moveBook;
     Spinner collectionSpinner;
     Book book;
+    TextView authortext, titletext, isbntext;
+    String author, title, isbn;
 
     final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_book_details_screen);
+
+        authortext = (TextView) findViewById(R.id.authorText);
+        titletext = (TextView) findViewById(R.id.titleText);
+        isbntext = (TextView) findViewById(R.id.isbnText);
+
+        try {
+            Intent detailsIntent = getIntent();
+            author = detailsIntent.getStringExtra("author");
+            title = detailsIntent.getStringExtra("title");
+            isbn = detailsIntent.getStringExtra("isbn");
+            if(author != null)
+                authortext.setText(author);
+            else
+                authortext.setText("");
+            if(title != null)
+                titletext.setText(title);
+            else
+                titletext.setText("");
+            if(isbn != null)
+                isbntext.setText(isbn);
+            else
+                isbntext.setText(isbn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         remind = (Button) findViewById(R.id.buttonRemind);
         addBook = (Button) findViewById(R.id.buttonCollection);
@@ -50,10 +80,11 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         about possibly removing a book
          */
 
-        collectionSpinner = createSpinner();
+       // collectionSpinner = createSpinner();
 
         remind.setOnClickListener(this);
         addListenerOnAddBookButton();
+
     }
     public void onClick(View v) {
         switch (v.getId()) {
