@@ -78,15 +78,15 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             e.printStackTrace();
         }
 
+        thumbView = (ImageView) findViewById(R.id.bookCover);
+
         try {
             imgURL = detailsIntent.getStringExtra("img");
             Log.d(getClass().getName(), "Image URL: " + imgURL);
-            //thumbView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.generic_book_cover_0));
-            thumbView.setImageDrawable(context.getResources().getDrawable(R.drawable.generic_book_cover));
             new GetBookThumb().execute(imgURL);
         } catch (Exception e) {
             e.printStackTrace();
-            //thumbView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.generic_book_cover));
+            thumbView.setImageResource(R.drawable.generic_book_cover);
         }
 
 
@@ -260,13 +260,16 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         @Override
         protected String doInBackground(String... thumbURLs){
             try{
+                Log.d(getClass().getName(), "Establishing connection...");
                 URL thumbURL = new URL(thumbURLs[0]);
                 URLConnection thumbConn = thumbURL.openConnection();
                 thumbConn.connect();
 
+                Log.d(getClass().getName(), "Downloading image...");
                 InputStream thumbIn = thumbConn.getInputStream();
                 BufferedInputStream thumbBuff = new BufferedInputStream(thumbIn);
 
+                Log.d(getClass().getName(), "Converting to bitmap...");
                 thumbImg = BitmapFactory.decodeStream(thumbBuff);
 
                 thumbBuff.close();
@@ -275,14 +278,16 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             } catch(Exception e){
                 e.printStackTrace();
             }
+
             return "";
         }
 
-        protected void OnPostExecute(String result){
+        @Override
+        protected void onPostExecute(String result){
+            Log.d(getClass().getName(), "Setting image...");
             thumbView = (ImageView) findViewById(R.id.bookCover);
-            thumbView.setImageBitmap(thumbImg);
-            ViewGroup mainView = (ViewGroup) findViewById(R.id.detailScreen);
-            mainView.invalidate();
+            if(!imgURL.equals(""))
+                thumbView.setImageBitmap(thumbImg);
         }
     }
 }
