@@ -6,15 +6,21 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.merqurius.Database;
@@ -22,6 +28,10 @@ import com.merqurius.MySQLiteHelper;
 import com.merqurius.R;
 import com.merqurius.test.Book;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +41,8 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
     Spinner collectionSpinner;
     Book book;
     TextView authortext, titletext, isbntext;
-    String author, title, isbn;
+    ImageView thumbView;
+    String author, title, isbn, imgURL;
 
     final Context context = this;
 
@@ -45,8 +56,9 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         titletext = (TextView) findViewById(R.id.titleText);
         isbntext = (TextView) findViewById(R.id.isbnText);
 
+        Intent detailsIntent = getIntent();
+
         try {
-            Intent detailsIntent = getIntent();
             author = detailsIntent.getStringExtra("author");
             title = detailsIntent.getStringExtra("title");
             isbn = detailsIntent.getStringExtra("isbn");
@@ -64,6 +76,17 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                 isbntext.setText(isbn);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        try {
+            imgURL = detailsIntent.getStringExtra("img");
+            Log.d(getClass().getName(), "Image URL: " + imgURL);
+            //thumbView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.generic_book_cover_0));
+            thumbView.setImageDrawable(context.getResources().getDrawable(R.drawable.generic_book_cover));
+            new GetBookThumb().execute(imgURL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //thumbView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.generic_book_cover));
         }
 
 
@@ -225,5 +248,41 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         spin.setAdapter(adapter_state);
 
         return spin;
+    }
+
+    /**
+     * Modified from code.tutsplus.com/tutorials/android-sdk-create-a-book-scanning-app-displaying-book-information--mobile-17880
+     */
+    public class GetBookThumb extends AsyncTask<String, Void, String> {
+
+        private Bitmap thumbImg;
+
+        @Override
+        protected String doInBackground(String... thumbURLs){
+            try{
+                URL thumbURL = new URL(thumbURLs[0]);
+                URLConnection thumbConn = thumbURL.openConnection();
+                thumbConn.connect();
+
+                InputStream thumbIn = thumbConn.getInputStream();
+                BufferedInputStream thumbBuff = new BufferedInputStream(thumbIn);
+
+                thumbImg = BitmapFactory.decodeStream(thumbBuff);
+
+                thumbBuff.close();
+                thumbIn.close();
+
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+            return "";
+        }
+
+        protected void OnPostExecute(String result){
+            thumbView = (ImageView) findViewById(R.id.bookCover);
+            thumbView.setImageBitmap(thumbImg);
+            ViewGroup mainView = (ViewGroup) findViewById(R.id.detailScreen);
+            mainView.invalidate();
+        }
     }
 }

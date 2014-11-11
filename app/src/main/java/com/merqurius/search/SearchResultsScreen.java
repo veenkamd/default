@@ -301,11 +301,35 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             builder.setMessage(m);
             builder.show();*/
 
+            //retrieve thumbnail url
+            String imgq = "https://www.googleapis.com/books/v1/volumes?q=";
+            if(isbns[i] == null) {
+                imgq += "intitle:" + titles[i];
+                if(authors[i] != null)
+                    imgq += "+inauthor:" + (authors[i]).replaceAll(" ", ",");
+            } else
+                imgq += "isbn:" + isbns[i];
+            imgq += "&key=AIzaSyBWUqhTT8y4aC9hyFgjenA3lhqi1cnV0R0&fields=items(volumeInfo/imageLinks/thumbnail)";
+
+            String imgr = fetchResults(imgq);
+            if(! imgr.equals("Unable to Connect")){
+                StringTokenizer st = new StringTokenizer(imgr, "{}[]\"\t\n");
+                while(st.hasMoreTokens() && ! st.nextToken().equals("thumbnail")){
+
+                    //Log.d(getClass().getName(), "token: " +  st.nextToken());
+                }
+                if(st.hasMoreTokens()){
+                    st.nextToken();
+                    imgr = st.nextToken();
+                } else
+                    imgr = "";
+            }
 
             Intent detailsIntent = new Intent (v.getContext(), BookDetailsScreen.class);
             detailsIntent.putExtra("author", authors[i]);
             detailsIntent.putExtra("title", titles[i]);
             detailsIntent.putExtra("isbn", isbns[i]);
+            detailsIntent.putExtra("img", imgr);
             startActivityForResult(detailsIntent, 0);
 
         }
