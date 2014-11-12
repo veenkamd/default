@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -37,13 +39,13 @@ import java.util.List;
 
 
 public class BookDetailsScreen extends Activity implements View.OnClickListener {
-    Button remind, addBook, moveBook;
+    Button remind, addBook, moveBook, loanButton;
     Spinner collectionSpinner;
     Book book;
-    TextView authortext, titletext, isbntext;
+    TextView authortext, titletext, isbntext, loanedtext;
     View promptsView;
     ImageView thumbView;
-    String author, title, isbn, imgURL;
+    String author, title, isbn, imgURL, loanName, loanedTo;
 
     final Context context = this;
 
@@ -56,6 +58,10 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         authortext = (TextView) findViewById(R.id.authorText);
         titletext = (TextView) findViewById(R.id.titleText);
         isbntext = (TextView) findViewById(R.id.isbnText);
+        loanedtext = (TextView) findViewById(R.id.loanedName);
+
+        remind = (Button) findViewById(R.id.buttonRemind);
+        loanButton = (Button) findViewById(R.id.buttonLoan);
 
         Intent detailsIntent = getIntent();
 
@@ -76,11 +82,23 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                 titletext.setText("");
                 book.setTitle("unknown");
             }
-            if(isbn != null)
+            if(isbn != null) {
+                fillBook(isbn);
+                loanName = book.getLoaned_to();
                 isbntext.setText(isbn);
+            }
             else {
                 isbntext.setText(isbn);
                 book.setIsbn("unknown");
+            }
+            if(loanName != null) {
+                loanedtext.setText(loanName);
+                remind.setEnabled(true);
+            }
+            else{
+                loanedtext.setText("Not loaned out");
+                remind.setEnabled(false);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +116,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         }
 
 
-        remind = (Button) findViewById(R.id.buttonRemind);
+
         addBook = (Button) findViewById(R.id.buttonCollection);
         /*Going to need something here like:
         if(book != null && !Strings.isEmpty(book.getCollection())){
@@ -123,7 +141,43 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.buttonRemind:
                 Intent remindIntent = new Intent(v.getContext(), EmailScreen.class);
+                remindIntent.putExtra("loanedName", loanedtext.getText().toString());
+                remindIntent.putExtra("bookTitle", titletext.getText().toString());
                 startActivityForResult(remindIntent, 0);
+                break;
+            case R.id.buttonLoan:
+                if(loanName != null) {
+                    book.setLoaned_to(null);
+                    loanedtext.setText("Not loaned out");
+                    remind.setEnabled(false);
+                    //make database method - look at update method at bottom
+                }
+                else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Loan To");
+                    final EditText input = new EditText(this);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+                    builder.setView(input);
+
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            loanedTo = input.getText().toString();
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                    book.setLoaned_to(loanedTo);
+                    loanedtext.setText(loanedTo);
+                    loanName = loanedTo;
+                    remind.setEnabled(true);
+                    //add database stuff
+                }
                 break;
         }
     }
@@ -246,6 +300,16 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
     private void insertBook(String collectionName){
         MySQLiteHelper db = new MySQLiteHelper(context);
         db.insertBook(collectionName, this.book);
+    }
+    private void fillBook(String isbn) {
+        MySQLiteHelper db = new MySQLiteHelper(context);
+        Cursor c = db.selectLoanTo(isbn);
+        if(c.moveToFirst()) {
+            int columnIndex = c.getColumnIndex(Database.LOANED_TO);
+            Log.d(getClass().getName(), "column index: " + columnIndex);
+            Log.d(getClass().getName(), "column value: " + c.getString(columnIndex));
+            book.setLoaned_to(c.getString(columnIndex));
+        }
     }
 
     private void updateBook(String collectionName){

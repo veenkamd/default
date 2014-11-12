@@ -17,11 +17,14 @@ public class EmailScreen extends Activity implements View.OnClickListener {
     Button email;
     EditText address;
     EditText message;
+    String title, loanName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        title = getIntent().getStringExtra("bookTitle");
+        loanName = getIntent().getStringExtra("loanedName");
 
         setContentView(R.layout.activity_email_screen);
 
@@ -31,14 +34,16 @@ public class EmailScreen extends Activity implements View.OnClickListener {
     }
     public void onClick(View v) {
         address = (EditText) v.findViewById((R.id.editEmailAddress));
-        message = (EditText)v.findViewById(R.id.editMessage);
+        message = (EditText) v.findViewById(R.id.editMessage);
         switch (v.getId()) {
             case R.id.buttonSend:
                 Intent i = new Intent(Intent.ACTION_SEND);
                 i.setType("message/rfc822");
                 i.putExtra(Intent.EXTRA_EMAIL, new String[]{address.getText().toString()} );
                 i.putExtra(Intent.EXTRA_SUBJECT, "YOU HAVE MY BOOK!");
-                i.putExtra(Intent.EXTRA_TEXT, message.getText().toString());
+                i.putExtra(Intent.EXTRA_TEXT, "Hello: " + loanName + "\n" +
+                        "You have the book " + title + " which belongs to me. Here is a message:\n"
+                        + message.getText().toString());
                 try {
                     startActivity(Intent.createChooser(i, "Send mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {

@@ -53,6 +53,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return db.rawQuery(Database.SELECT_BOOK_TITLES_FOR_COLLECTION,new String[]{collectionName});
     }
 
+    public Cursor selectLoanTo(String isbn) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(Database.SELECT_LOANED_TO_BY_ISBN,new String[]{isbn});
+    }
+
     public void insertBook(String collectionName, Book book){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
