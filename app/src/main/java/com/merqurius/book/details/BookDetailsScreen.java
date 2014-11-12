@@ -69,7 +69,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             author = detailsIntent.getStringExtra("author");
             title = detailsIntent.getStringExtra("title");
             isbn = detailsIntent.getStringExtra("isbn");
-            book = new Book(author, title, isbn);
+            book = new Book(title, author, isbn);
             if(author != null)
                 authortext.setText(author);
             else {
@@ -227,7 +227,9 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        insertBook(String.valueOf(collectionSpinner.getSelectedItem()));
+                                        book.setCollection(collectionSpinner.getSelectedItem().toString());
+                                        insertBook(collectionSpinner.getSelectedItem().toString());
+                                        Log.d("Inserting to:", collectionSpinner.getSelectedItem().toString());
                                     }
                                 })
                         .setNegativeButton("Cancel",

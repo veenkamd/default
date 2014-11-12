@@ -44,7 +44,7 @@ public final class Database {
     //Queries
     public static final String SELECT_ALL_COLLECTIONS = "SELECT * FROM collection";
     public static final String SELECT_BOOK_TITLES_FOR_COLLECTION =
-            "SELECT title FROM book WHERE collection = ?";
+            "SELECT * FROM book where collection = ?";
     public static final String SELECT_LOANED_TO_BY_ISBN =
             "SELECT loaned_to FROM book WHERE isbn = ?";
 }

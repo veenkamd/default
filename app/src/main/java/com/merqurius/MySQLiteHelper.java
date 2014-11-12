@@ -50,6 +50,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     public Cursor selectBookTitlesByCollection(String collectionName){
         SQLiteDatabase db = this.getReadableDatabase();
+        Log.d("Select from", collectionName);
         return db.rawQuery(Database.SELECT_BOOK_TITLES_FOR_COLLECTION,new String[]{collectionName});
     }
 
@@ -61,17 +62,18 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void insertBook(String collectionName, Book book){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(Database.TITLE, book.getTitle());
         cv.put(Database.ISBN, book.getIsbn());
-        cv.put(Database.AUTHOR, book.getAuthor());
-        cv.put(Database.DESCRIPTION, book.getDescription());
         cv.put(Database.STATUS, book.getStatus());
+        cv.put(Database.TITLE, book.getTitle());
         cv.put(Database.GENRE, book.getGenre());
-        cv.put(Database.COLLECTION, book.getCollection());
         cv.put(Database.LOANED_TO, book.getLoaned_to());
         cv.put(Database.NUM_PAGES, book.getNumPages());
+        cv.put(Database.AUTHOR, book.getAuthor());
+        cv.put(Database.COLLECTION, book.getCollection());
         cv.put(Database.RATING, book.getRating());
+        cv.put(Database.DESCRIPTION, book.getDescription());
         db.insertOrThrow(Database.BOOK_TBL, null, cv);
+
         db.close();
     }
 

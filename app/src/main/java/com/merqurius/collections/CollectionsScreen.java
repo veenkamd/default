@@ -85,6 +85,7 @@ public class CollectionsScreen extends Activity {
         for(int i = 0; i < collectionDataHeader.size(); i++){
             String collectionName = collectionDataHeader.get(i);
             List<String> titles = getBookTitlesForCollection(collectionName);
+            Log.d(getClass().getName(), titles.toString());
             collectionDataChild.put(collectionName, titles);
         }
     }
@@ -219,11 +220,16 @@ public class CollectionsScreen extends Activity {
         MySQLiteHelper db = new MySQLiteHelper(context);
         Cursor cursor = db.selectBookTitlesByCollection(collectionName);
 
+        Log.d("We're in the", "get book titles method");
+
         List<String> titles = new ArrayList<String>();
-        while(cursor.moveToNext()){
-            int columnIndex = cursor.getColumnIndex(Database.TITLE);
-            titles.add(cursor.getString(columnIndex));
-        }
+        if(cursor.moveToFirst())
+            do {
+                int columnIndex = cursor.getColumnIndex(Database.TITLE);
+                Log.d("columnIndex", "" + columnIndex);
+                Log.d("column value", "" + cursor.getString(columnIndex));
+                titles.add(cursor.getString(columnIndex));
+            } while(cursor.moveToNext());
 
         return titles;
     }
