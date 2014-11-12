@@ -41,6 +41,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
     Spinner collectionSpinner;
     Book book;
     TextView authortext, titletext, isbntext;
+    View promptsView;
     ImageView thumbView;
     String author, title, isbn, imgURL;
 
@@ -62,18 +63,25 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             author = detailsIntent.getStringExtra("author");
             title = detailsIntent.getStringExtra("title");
             isbn = detailsIntent.getStringExtra("isbn");
+            book = new Book(author, title, isbn);
             if(author != null)
                 authortext.setText(author);
-            else
+            else {
                 authortext.setText("");
+                book.setAuthor("unknown");
+            }
             if(title != null)
                 titletext.setText(title);
-            else
+            else {
                 titletext.setText("");
+                book.setTitle("unknown");
+            }
             if(isbn != null)
                 isbntext.setText(isbn);
-            else
+            else {
                 isbntext.setText(isbn);
+                book.setIsbn("unknown");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,7 +111,9 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         about possibly removing a book
          */
 
-       // collectionSpinner = createSpinner();
+
+
+
 
         remind.setOnClickListener(this);
         addListenerOnAddBookButton();
@@ -147,12 +157,15 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             public void onClick(View arg0) {
                 // get book_details_add_prompt.xml view
                 LayoutInflater li = LayoutInflater.from(context);
-                View promptsView = li.inflate(R.layout.book_details_add_prompt, null);
+                promptsView = li.inflate(R.layout.book_details_add_prompt, null);
+
+                collectionSpinner = createSpinner();
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
                 // set book_details_add_prompt.xml to alertDialog builder
                 alertDialogBuilder.setView(promptsView);
+                //alertDialogBuilder.setAdapter(adapter_state, null);
 
                 // set dialog message
                 alertDialogBuilder
@@ -219,13 +232,14 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
     protected List getAllCollections(){
         MySQLiteHelper db = new MySQLiteHelper(context);
         Cursor cursor = db.selectAllCollections();
-
+        cursor.moveToFirst();
         List<String> collections = new ArrayList<String>();
-        while(cursor.moveToNext()){
+        do {
             int columnIndex = cursor.getColumnIndex(Database.COLLECTION_NAME);
             Log.d(getClass().getName(), "column index: " + columnIndex);
+            Log.d(getClass().getName(), "column value: " + cursor.getString(columnIndex));
             collections.add(cursor.getString(columnIndex));
-        }
+        } while(cursor.moveToNext());
         return collections;
     }
 
@@ -240,7 +254,9 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
     }
 
     private Spinner createSpinner(){
-        Spinner spin = (Spinner) findViewById(R.id.collectionSpinner);
+
+        Spinner spin = (Spinner) promptsView.findViewById(R.id.collectionSpinner);
+        //Spinner spin = new Spinner(this);
         List collections = getAllCollections();
 
         ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(BookDetailsScreen.this,  android.R.layout.simple_spinner_item, collections);

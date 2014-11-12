@@ -12,6 +12,32 @@ public class Book {
     private int numPages;
     private int rating;
 
+    public Book(String t, String a, String i, String g, String d, String s, String l, String c, int n, int r){
+        title = t;
+        author = a;
+        isbn = i;
+        genre = g;
+        description = d;
+        status = s;
+        loaned_to = l;
+        collection = c;
+        numPages = n;
+        rating = r;
+    }
+
+    public Book(String t, String a, String i){
+        title = t;
+        author = a;
+        isbn = i;
+        genre = "unknown";
+        description = "unknown";
+        status = "unknown";
+        loaned_to = "unknown";
+        collection = "unknown";
+        numPages = 0;
+        rating = 0;
+    }
+
     public String getTitle() {
         return title;
     }
