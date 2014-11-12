@@ -14,7 +14,7 @@
         android:layout_width="125dp"
         android:layout_height="200dp"
         android:id="@+id/bookCover"
-        android:src="@drawable/catch22" android:scaleType="fitXY" />
+        android:src="@drawable/generic_book_cover" android:scaleType="fitXY" />
 </TableRow>
 
 <TableRow>
