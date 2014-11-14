@@ -54,6 +54,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return db.rawQuery(Database.SELECT_BOOK_TITLES_FOR_COLLECTION,new String[]{collectionName});
     }
 
+    public Cursor selectBookDetails(String title, String collectionName){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(Database.SELECT_BOOK_DETAILS, new String[]{title, collectionName});
+    }
+
     public Cursor selectLoanTo(String isbn) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(Database.SELECT_LOANED_TO_BY_ISBN,new String[]{isbn});
@@ -70,6 +75,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         cv.put(Database.NUM_PAGES, book.getNumPages());
         cv.put(Database.AUTHOR, book.getAuthor());
         cv.put(Database.COLLECTION, book.getCollection());
+        cv.put(Database.IMGURL, book.getImgURL());
         cv.put(Database.RATING, book.getRating());
         cv.put(Database.DESCRIPTION, book.getDescription());
         db.insertOrThrow(Database.BOOK_TBL, null, cv);
@@ -81,6 +87,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(Database.COLLECTION, book.getCollection());
+        Log.d("Moving " + book.getIsbn() + "to", book.getCollection());
         return db.update(Database.BOOK_TBL, cv, Database.WHERE_ISBN,
                 new String []{book.getIsbn()});
     }

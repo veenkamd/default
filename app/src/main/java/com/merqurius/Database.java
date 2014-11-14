@@ -12,6 +12,7 @@ public final class Database {
     public static final String LOANED_TO   = "loaned_to";
     public static final String NUM_PAGES   = "num_pages";
     public static final String COLLECTION  = "collection";
+    public static final String IMGURL      = "imgurl";
     public static final String RATING      = "rating";
 
     public static final String WHERE_ISBN = "isbn = ?";
@@ -31,6 +32,7 @@ public final class Database {
             + NUM_PAGES + " integer, "
             + AUTHOR + " varchar(50) not null, "
             + COLLECTION + " integer not null, "
+            + IMGURL + " varchar(200) not null, "
             + RATING + " integer, "
             + DESCRIPTION + " varchar(300));";
     public static final String CREATE_COLLECTION = "create table " + COLLECTION_TBL + "("
@@ -44,7 +46,9 @@ public final class Database {
     //Queries
     public static final String SELECT_ALL_COLLECTIONS = "SELECT * FROM collection";
     public static final String SELECT_BOOK_TITLES_FOR_COLLECTION =
-            "SELECT * FROM book where collection = ?";
+            "SELECT title FROM book WHERE collection = ?";
+    public static final String SELECT_BOOK_DETAILS =
+            "SELECT * FROM book WHERE title = ? AND collection = ?";
     public static final String SELECT_LOANED_TO_BY_ISBN =
             "SELECT loaned_to FROM book WHERE isbn = ?";
 }

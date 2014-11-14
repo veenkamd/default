@@ -42,7 +42,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
     Button remind, addBook, moveBook, loanButton;
     Spinner collectionSpinner;
     Book book;
-    TextView authortext, titletext, isbntext, loanedtext;
+    TextView authortext, titletext, isbntext, loanedtext, collectiontext;
     View promptsView;
     ImageView thumbView;
     String author, title, isbn, imgURL, loanName, loanedTo;
@@ -59,6 +59,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         titletext = (TextView) findViewById(R.id.titleText);
         isbntext = (TextView) findViewById(R.id.isbnText);
         loanedtext = (TextView) findViewById(R.id.loanedName);
+        collectiontext = (TextView) findViewById(R.id.collectionText);
 
         remind = (Button) findViewById(R.id.buttonRemind);
         loanButton = (Button) findViewById(R.id.buttonLoan);
@@ -104,10 +105,15 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             e.printStackTrace();
         }
 
+        if(detailsIntent.getStringExtra("collection") != null)
+            book.setCollection(detailsIntent.getStringExtra("collection"));
+        collectiontext.setText(book.getCollection());
+
         thumbView = (ImageView) findViewById(R.id.bookCover);
 
         try {
             imgURL = detailsIntent.getStringExtra("img");
+            book.setImgURL(imgURL);
             Log.d(getClass().getName(), "Image URL: " + imgURL);
             new GetBookThumb().execute(imgURL);
         } catch (Exception e) {
@@ -137,6 +143,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         addListenerOnAddBookButton();
 
     }
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonRemind:
@@ -227,9 +234,17 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        book.setCollection(collectionSpinner.getSelectedItem().toString());
-                                        insertBook(collectionSpinner.getSelectedItem().toString());
-                                        Log.d("Inserting to:", collectionSpinner.getSelectedItem().toString());
+                                        if (book.getCollection().equals("Not owned")) {
+                                            book.setCollection(collectionSpinner.getSelectedItem().toString());
+                                            insertBook(collectionSpinner.getSelectedItem().toString());
+                                            Log.d("Inserting to:", collectionSpinner.getSelectedItem().toString());
+                                        } else {
+                                            book.setCollection(collectionSpinner.getSelectedItem().toString());
+                                            updateBook(collectionSpinner.getSelectedItem().toString());
+                                            Log.d("Inserting to:", collectionSpinner.getSelectedItem().toString());
+                                        }
+                                        collectiontext.setText(book.getCollection());
+
                                     }
                                 })
                         .setNegativeButton("Cancel",

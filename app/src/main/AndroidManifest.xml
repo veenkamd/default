@@ -12,11 +12,11 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".book.details.BookDetailsScreen"
-            android:label="@string/app_name" >
+            android:label="Book Details" >
         </activity>
         <activity
             android:name=".home.HomeScreen"
-            android:label="Home" >
+            android:label="Merqurius" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

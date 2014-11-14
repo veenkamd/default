@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.merqurius.Database;
 import com.merqurius.MySQLiteHelper;
+import com.merqurius.book.details.BookDetailsScreen;
 import com.merqurius.test.Book;
 import com.merqurius.R;
 
@@ -54,6 +55,13 @@ public class CollectionsScreen extends Activity {
         this.listView.setAdapter(this.adapter);
 
         addListenerOnButton();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     @Override
@@ -112,9 +120,9 @@ public class CollectionsScreen extends Activity {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
+                /*Toast.makeText(getApplicationContext(),
                         collectionDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
 
                 //TODO: do stuff if this is expanded
             }
@@ -125,9 +133,9 @@ public class CollectionsScreen extends Activity {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
+                /*Toast.makeText(getApplicationContext(),
                         collectionDataHeader.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
 
                 //TODO: do stuff if this is collapsed?
             }
@@ -139,16 +147,41 @@ public class CollectionsScreen extends Activity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View view,
                                         int groupPosition, int childPosition, long id) {
-                Toast.makeText(
+                /*Toast.makeText(
                         getApplicationContext(),
                         collectionDataHeader.get(groupPosition)
                                 + " : "
                                 + collectionDataChild.get(
                                 collectionDataHeader.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT)
-                        .show();
+                        .show();*/
 
                 //TODO: do stuff if this is clicked
+
+                String title = collectionDataChild.get(collectionDataHeader.get(groupPosition)).get(childPosition);
+                String collectionName = collectionDataHeader.get(groupPosition);
+                MySQLiteHelper db = new MySQLiteHelper(context);
+                Cursor cursor = db.selectBookDetails(title, collectionName);
+
+                if(cursor.moveToFirst())
+                {
+                    Intent detailsIntent = new Intent (listView.getContext(), BookDetailsScreen.class);
+                    int columnIndex = cursor.getColumnIndex(Database.AUTHOR);
+                    detailsIntent.putExtra("author", cursor.getString(columnIndex));
+                    columnIndex = cursor.getColumnIndex(Database.TITLE);
+                    detailsIntent.putExtra("title", cursor.getString(columnIndex));
+                    columnIndex = cursor.getColumnIndex(Database.ISBN);
+                    detailsIntent.putExtra("isbn", cursor.getString(columnIndex));
+                    columnIndex = cursor.getColumnIndex(Database.IMGURL);
+                    detailsIntent.putExtra("img", cursor.getString(columnIndex));
+                    columnIndex = cursor.getColumnIndex(Database.COLLECTION);
+                    detailsIntent.putExtra("collection", cursor.getString(columnIndex));
+                    startActivityForResult(detailsIntent, 0);
+
+                }
+
+
+
                 return false;
             }
         });

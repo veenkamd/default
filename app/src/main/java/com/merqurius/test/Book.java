@@ -9,10 +9,11 @@ public class Book {
     private String status; //This shouldn't be a string, but I'm doing this temporarily for a skeleton
     private String loaned_to;
     private String collection;
+    private String imgURL;
     private int numPages;
     private int rating;
 
-    public Book(String t, String a, String i, String g, String d, String s, String l, String c, int n, int r){
+    public Book(String t, String a, String i, String g, String d, String s, String l, String c, String iu, int n, int r){
         title = t;
         author = a;
         isbn = i;
@@ -21,6 +22,7 @@ public class Book {
         status = s;
         loaned_to = l;
         collection = c;
+        imgURL = iu;
         numPages = n;
         rating = r;
     }
@@ -31,9 +33,10 @@ public class Book {
         isbn = i;
         genre = "unknown";
         description = "unknown";
-        status = "unknown";
-        loaned_to = "unknown";
-        collection = "unknown";
+        status = "Not owned";
+        loaned_to = "Not loaned";
+        collection = "Not owned";
+        imgURL = null;
         numPages = 0;
         rating = 0;
     }
@@ -117,4 +120,8 @@ public class Book {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    public String getImgURL() { return imgURL; }
+
+    public void setImgURL(String imgURL1) { this.imgURL = imgURL1; }
 }
