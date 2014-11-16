@@ -43,7 +43,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
     Spinner collectionSpinner;
     Book book;
     TextView authortext, titletext, isbntext, loanedtext, collectiontext;
-    View promptsView;
+    View promptsView, loanPromptView;
     ImageView thumbView;
     String author, title, isbn, imgURL, loanName, loanedTo;
 
@@ -92,12 +92,12 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                 isbntext.setText(isbn);
                 book.setIsbn("unknown");
             }
-            if(loanName != null) {
+            if(!(loanName.equals("Not loaned"))) {
                 loanedtext.setText(loanName);
                 remind.setEnabled(true);
             }
             else{
-                loanedtext.setText("Not loaned out");
+                loanedtext.setText("Not loaned");
                 remind.setEnabled(false);
 
             }
@@ -153,32 +153,35 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                 startActivityForResult(remindIntent, 0);
                 break;
             case R.id.buttonLoan:
-                if(loanName != null) {
-                    book.setLoaned_to(null);
-                    loanedtext.setText("Not loaned out");
+                if(!(loanName.equals("Not loaned"))) {
+                    book.setLoaned_to("Not loaned");
+                    loanedtext.setText("Not loaned");
                     remind.setEnabled(false);
                     //make database method - look at update method at bottom
                 }
                 else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("Loan To");
-                    final EditText input = new EditText(this);
-                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
-                    builder.setView(input);
+                    LayoutInflater loanPromptLayout = LayoutInflater.from(context);
+                    loanPromptView = loanPromptLayout.inflate(R.layout.book_details_loan_set, null);
+                    final EditText loanPrompt = (EditText) findViewById(R.id.loanedInput);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setView(loanPromptView);
 
-                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                            loanedTo = input.getText().toString();
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.show();
+                    builder.setCancelable(true)
+                            .setPositiveButton("OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            loanedTo = loanPrompt.getText().toString();
+                                        }
+                                    })
+                            .setNegativeButton("Cancel",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
                     book.setLoaned_to(loanedTo);
                     loanedtext.setText(loanedTo);
                     loanName = loanedTo;
