@@ -162,6 +162,8 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                     remind.setEnabled(false);
                     //make database method - look at update method at bottom
                     Log.d(getClass().getName(), "Ending loan");
+                    MySQLiteHelper db = new MySQLiteHelper(context);
+                    db.loanBook(book);
                 }
                 else{
                     LayoutInflater loanPromptLayout = LayoutInflater.from(context);
@@ -177,6 +179,12 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             loanedTo = loanPrompt.getText().toString();
+                                            book.setLoaned_to(loanedTo);
+                                            loanedtext.setText(loanedTo);
+                                            loanName = loanedTo;
+                                            remind.setEnabled(true);
+                                            MySQLiteHelper db = new MySQLiteHelper(context);
+                                            db.loanBook(book);
                                         }
                                     })
                             .setNegativeButton("Cancel",
@@ -188,10 +196,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                     AlertDialog dialog = builder.create();
                     dialog.show();
 
-                    book.setLoaned_to(loanedTo);
-                    loanedtext.setText(loanedTo);
-                    loanName = loanedTo;
-                    remind.setEnabled(true);
+
                     //add database stuff
                 }
                 break;

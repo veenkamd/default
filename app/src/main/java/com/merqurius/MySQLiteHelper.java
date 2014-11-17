@@ -91,4 +91,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return db.update(Database.BOOK_TBL, cv, Database.WHERE_ISBN,
                 new String []{book.getIsbn()});
     }
+
+    public int loanBook(Book book){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Database.LOANED_TO, book.getLoaned_to());
+        Log.d("Loaning " + book.getIsbn() + "to", book.getLoaned_to());
+        return db.update(Database.BOOK_TBL, cv, Database.WHERE_ISBN, new String[]{book.getIsbn()});
+    }
 }
