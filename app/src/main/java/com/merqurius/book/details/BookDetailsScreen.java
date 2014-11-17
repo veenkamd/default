@@ -140,6 +140,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
 
 
         remind.setOnClickListener(this);
+        loanButton.setOnClickListener(this);
         addListenerOnAddBookButton();
 
     }
@@ -162,7 +163,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                 else{
                     LayoutInflater loanPromptLayout = LayoutInflater.from(context);
                     loanPromptView = loanPromptLayout.inflate(R.layout.book_details_loan_set, null);
-                    final EditText loanPrompt = (EditText) findViewById(R.id.loanedInput);
+                    final EditText loanPrompt = (EditText) loanPromptView.findViewById(R.id.loanedInput);
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                     builder.setView(loanPromptView);
