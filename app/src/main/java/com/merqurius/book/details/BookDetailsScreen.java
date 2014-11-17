@@ -153,7 +153,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                 startActivityForResult(remindIntent, 0);
                 break;
             case R.id.buttonLoan:
-                if(!(loanName.equals("Not loaned"))) {
+                if(!(book.getLoaned_to().equals("Not loaned"))) {
                     book.setLoaned_to("Not loaned");
                     loanedtext.setText("Not loaned");
                     remind.setEnabled(false);
@@ -164,6 +164,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                     loanPromptView = loanPromptLayout.inflate(R.layout.book_details_loan_set, null);
                     final EditText loanPrompt = (EditText) findViewById(R.id.loanedInput);
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
                     builder.setView(loanPromptView);
 
                     builder.setCancelable(true)
