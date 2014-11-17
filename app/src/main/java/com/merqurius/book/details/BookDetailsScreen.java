@@ -158,11 +158,13 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                     loanedtext.setText("Not loaned");
                     remind.setEnabled(false);
                     //make database method - look at update method at bottom
+                    Log.d(getClass().getName(), "Ending loan");
                 }
                 else{
                     LayoutInflater loanPromptLayout = LayoutInflater.from(context);
                     loanPromptView = loanPromptLayout.inflate(R.layout.book_details_loan_set, null);
                     final EditText loanPrompt = (EditText) findViewById(R.id.loanedInput);
+                    Log.d(getClass().getName(), "Starting loan");
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setView(loanPromptView);
 

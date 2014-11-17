@@ -126,7 +126,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start/End Loan"
-        android:id="@+id/buttonLoan" />
+        android:id="@+id/buttonLoan"
+        android:clickable="true" />
     </TableRow>
     <TableRow
     android:gravity="center_horizontal|center_vertical" >
