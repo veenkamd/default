@@ -1,8 +1,10 @@
 package com.merqurius.book.details;
 
 import android.app.Activity;
+import android.app.LauncherActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,19 +24,20 @@ public class EmailScreen extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_email_screen);
 
         title = getIntent().getStringExtra("bookTitle");
         loanName = getIntent().getStringExtra("loanedName");
 
-        setContentView(R.layout.activity_email_screen);
+        address = (EditText) findViewById((R.id.editEmailAddress));
+        message = (EditText) findViewById(R.id.editMessage);
 
         email = (Button) findViewById(R.id.buttonSend);
 
         email.setOnClickListener(this);
     }
     public void onClick(View v) {
-        address = (EditText) v.findViewById((R.id.editEmailAddress));
-        message = (EditText) v.findViewById(R.id.editMessage);
+
         switch (v.getId()) {
             case R.id.buttonSend:
                 Intent i = new Intent(Intent.ACTION_SEND);
