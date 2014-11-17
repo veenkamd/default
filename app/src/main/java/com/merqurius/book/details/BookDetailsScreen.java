@@ -91,6 +91,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             else {
                 isbntext.setText(isbn);
                 book.setIsbn("unknown");
+                loanName = "Not loaned";
             }
             if(!(loanName.equals("Not loaned"))) {
                 loanedtext.setText(loanName);
@@ -140,6 +141,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
 
 
         remind.setOnClickListener(this);
+        loanButton.setOnClickListener(this);
         addListenerOnAddBookButton();
 
     }
@@ -147,6 +149,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonRemind:
+                Log.d(getClass().getName(), "Sending reminder");
                 Intent remindIntent = new Intent(v.getContext(), EmailScreen.class);
                 remindIntent.putExtra("loanedName", loanedtext.getText().toString());
                 remindIntent.putExtra("bookTitle", titletext.getText().toString());
@@ -163,7 +166,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                 else{
                     LayoutInflater loanPromptLayout = LayoutInflater.from(context);
                     loanPromptView = loanPromptLayout.inflate(R.layout.book_details_loan_set, null);
-                    final EditText loanPrompt = (EditText) findViewById(R.id.loanedInput);
+                    final EditText loanPrompt = (EditText) loanPromptView.findViewById(R.id.loanedInput);
                     Log.d(getClass().getName(), "Starting loan");
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -192,6 +195,8 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                     //add database stuff
                 }
                 break;
+            default:
+                Log.d(getClass().getName(), "Clicked: " + v.getId());
         }
     }
 
@@ -379,6 +384,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                 thumbIn.close();
 
             } catch(Exception e){
+                imgURL = "";
                 e.printStackTrace();
             }
 

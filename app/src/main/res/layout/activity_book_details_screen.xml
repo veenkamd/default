@@ -1,144 +1,154 @@
-
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:stretchColumns="1"
-    android:background="#ff2889ff"
-    tools:context=".BookDetails"
-    android:id="@+id/detailScreen">
-
-<TableRow
-    android:gravity="center_horizontal|center_vertical" >
-    <ImageView
-        android:layout_width="125dp"
-        android:layout_height="200dp"
-        android:id="@+id/bookCover"
-        android:src="@drawable/generic_book_cover" android:scaleType="fitXY" />
-</TableRow>
-
-<TableRow>
-    <TextView
-        android:padding="3dip"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/bookdetails_title"
-        android:textColor="#ffffffff"
-        android:id="@+id/bookTitle"/>
-    <TextView
-        android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="#ff2889ff">
+    <ScrollView
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:padding="3dip"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Catch-22"
-        android:id="@+id/titleText"
-        android:textColor="#ffffffff" />
-</TableRow>
+        android:layout_width="match_parent">
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:stretchColumns="1"
+            android:shrinkColumns="1"
+            android:background="#ff2889ff"
+            tools:context=".BookDetails"
+            android:id="@+id/detailScreen">
 
-<TableRow>
-    <TextView
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/bookdetails_author"
-        android:textColor="#ffffffff"
-        android:id="@+id/bookAuthor" />
+        <TableRow
+            android:gravity="center_horizontal|center_vertical" >
+            <ImageView
+                android:layout_width="125dp"
+                android:layout_height="200dp"
+                android:id="@+id/bookCover"
+                android:src="@drawable/generic_book_cover" android:scaleType="fitXY" />
+        </TableRow>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Joseph Heller"
-        android:id="@+id/authorText"
-        android:textColor="#ffffffff"
-        android:gravity="right"
-        android:padding="3dip"
-         />
-</TableRow>
+        <TableRow
+            android:layout_height="wrap_content">
+            <TextView
+                android:padding="3dip"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/bookdetails_title"
+                android:textColor="#ffffffff"
+                android:id="@+id/bookTitle"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="3dip"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Catch-22"
+                android:id="@+id/titleText"
+                android:textColor="#ffffffff" />
+        </TableRow>
 
-<TableRow>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/bookdetails_collection"
-        android:textColor="#ffffffff"
-        android:id="@+id/collectionTag"/>
+        <TableRow>
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/bookdetails_author"
+                android:textColor="#ffffffff"
+                android:id="@+id/bookAuthor" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Placeholder Collection"
-        android:gravity="right"
-        android:padding="3dip"
-        android:id="@+id/collectionText"
-        android:textColor="#ffffffff" />
-</TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Joseph Heller"
+                android:id="@+id/authorText"
+                android:textColor="#ffffffff"
+                android:gravity="right"
+                android:padding="3dip"
+                 />
+        </TableRow>
 
-<TableRow>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/bookdetails_isbn"
-        android:textColor="#ffffffff"
-        android:id="@+id/bookIsbn" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="978-1451626650"
-        android:id="@+id/isbnText"
-        android:textColor="#ffffffff"
-        android:gravity="right"
-        android:padding="3dip" />
-</TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/bookdetails_collection"
+                android:textColor="#ffffffff"
+                android:id="@+id/collectionTag"/>
 
-    <TableRow>
-        <TextView
-            android:padding="3dip"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Loaned to:"
-            android:textColor="#ffffffff"
-            android:id="@+id/loanedTitle"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:padding="3dip"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Placeholder Name"
-            android:id="@+id/loanedName"
-            android:textColor="#ffffffff" />
-    </TableRow>
-    <TableRow
-        android:gravity="center_horizontal|center_vertical" >
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Remind Friend"
-        android:id="@+id/buttonRemind" />
-    </TableRow>
-    <TableRow
-        android:gravity="center_horizontal|center_vertical" >
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start/End Loan"
-        android:id="@+id/buttonLoan"
-        android:clickable="true" />
-    </TableRow>
-    <TableRow
-    android:gravity="center_horizontal|center_vertical" >
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change Collection"
-            android:id="@+id/buttonCollection" />
-    </TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Placeholder Collection"
+                android:gravity="right"
+                android:padding="3dip"
+                android:id="@+id/collectionText"
+                android:textColor="#ffffffff" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/bookdetails_isbn"
+                android:textColor="#ffffffff"
+                android:id="@+id/bookIsbn" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="978-1451626650"
+                android:id="@+id/isbnText"
+                android:textColor="#ffffffff"
+                android:gravity="right"
+                android:padding="3dip" />
+        </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:padding="3dip"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Loaned to:"
+                    android:textColor="#ffffffff"
+                    android:id="@+id/loanedTitle"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Placeholder Name"
+                    android:id="@+id/loanedName"
+                    android:textColor="#ffffffff" />
+            </TableRow>
+            <TableRow
+                android:gravity="center_horizontal|center_vertical" >
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remind Friend"
+                android:id="@+id/buttonRemind" />
+            </TableRow>
+            <TableRow
+                android:gravity="center_horizontal|center_vertical" >
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start/End Loan"
+                android:id="@+id/buttonLoan"
+                android:clickable="true" />
+            </TableRow>
+            <TableRow
+            android:gravity="center_horizontal|center_vertical" >
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Collection"
+                    android:id="@+id/buttonCollection" />
+            </TableRow>
 
 
 
-</TableLayout>
+        </TableLayout>
+    </ScrollView>
+</LinearLayout>
