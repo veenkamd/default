@@ -9,11 +9,4 @@
     tools:context="com.merqurius.search.SearchScanScreen">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Before the results..."
-        android:id="@+id/resultText"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>

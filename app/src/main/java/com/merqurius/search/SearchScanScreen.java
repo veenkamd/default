@@ -21,13 +21,17 @@ public class SearchScanScreen extends Activity {
         setContentView(R.layout.activity_scan);
 
         // starting the scanner
-        IntentIntegrator integrator = new IntentIntegrator(this);
+        /*IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.addExtra("SCAN_WIDTH", 640);
         integrator.addExtra("SCAN_HEIGHT", 480);
-        integrator.addExtra("SCAN_MODE", "QR_CODE_MODE,PRODUCT_MODE");
+        integrator.addExtra("SCAN_MODE", "PRODUCT_MODE");
 
         integrator.addExtra("PROMPT_MESSAGE", "Scanner Start!");
-        integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);
+        integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);*/
+
+        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+        intent.putExtra("SCAN_MODE", "SCAN_MODE");
+        startActivityForResult(intent, 0);
     }
 
 
@@ -50,7 +54,7 @@ public class SearchScanScreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    /*public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (result != null) {
             String contents = result.getContents();
@@ -60,5 +64,18 @@ public class SearchScanScreen extends Activity {
 
             }
         }
+    }*/
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        String contents;
+        if (resultCode == Activity.RESULT_OK){
+            contents = intent.getStringExtra("SCAN_RESULT") + " " + intent.getStringExtra("SCAN_RESULT_FORMAT");
+        } else {
+            contents = "This did not work";
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(contents);
+        builder.show();
     }
+
 }
