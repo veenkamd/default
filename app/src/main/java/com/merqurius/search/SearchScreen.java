@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.merqurius.Database;
+import com.merqurius.MySQLiteHelper;
 import com.merqurius.R;
+import com.merqurius.book.details.BookDetailsScreen;
 import com.merqurius.search.SearchResultsScreen;
 
 import java.io.BufferedReader;
@@ -30,13 +34,17 @@ import java.util.concurrent.ExecutionException;
 public class SearchScreen extends Activity implements View.OnClickListener {
 
     Button search;
-    EditText titlebox, authorbox, genrebox, isbnbox;
-    String title, author, genre, isbn;
+    EditText titlebox, authorbox, isbnbox;
+    String title, author, isbn;
+    Boolean online = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        Intent SearchIntent = getIntent();
+        online = SearchIntent.getBooleanExtra("mode", true);
 
         search = (Button) findViewById(R.id.buttonSearch);
         search.setOnClickListener(this);
@@ -45,8 +53,6 @@ public class SearchScreen extends Activity implements View.OnClickListener {
         titlebox.setTextColor(Color.WHITE);
         authorbox = (EditText) findViewById(R.id.author_text);
         authorbox.setTextColor(Color.WHITE);
-        genrebox = (EditText) findViewById(R.id.genre_text);
-        genrebox.setTextColor(Color.WHITE);
         isbnbox = (EditText) findViewById(R.id.isbn_text);
         isbnbox.setTextColor(Color.WHITE);
 
@@ -58,27 +64,83 @@ public class SearchScreen extends Activity implements View.OnClickListener {
             case R.id.buttonSearch:
                 title = titlebox.getText().toString();
                 author = authorbox.getText().toString();
-                genre = genrebox.getText().toString();
                 isbn = isbnbox.getText().toString();
 
-                String q = buildQuery(title, author, genre, isbn);
-                String r = fetchResults(q);
-                if(! r.equals("Unable to Connect")) {
-                    Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
-                    searchResultsIntent.putExtra("query", q);
-                    searchResultsIntent.putExtra("response", r);
-                    Log.d(getClass().getName(), "Forwarding to results screen.");
-                    startActivityForResult(searchResultsIntent, 0);
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(r);
-                    builder.show();
+                if(online) {
+                    String q = buildQuery(title, author, isbn);
+                    String r = fetchResults(q);
+                    if (!r.equals("Unable to Connect")) {
+                        Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
+                        searchResultsIntent.putExtra("query", q);
+                        searchResultsIntent.putExtra("response", r);
+                        Log.d(getClass().getName(), "Forwarding to results screen.");
+                        startActivityForResult(searchResultsIntent, 0);
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage(r);
+                        builder.show();
+                    }
+                    break;
                 }
-                break;
+                else {
+                    queryDB(title, author, isbn, v);
+                }
         }
     }
 
-    private String buildQuery(String t, String a, String g, String i) {
+    private void queryDB(String t, String a, String i, View v){
+        MySQLiteHelper db = new MySQLiteHelper(this);
+        Cursor cursor = db.selectBookFromSearch( "%" + t + "%", "%" + a + "%", i);
+        String[] authors, titles, isbns, pubdates, descs, imgurls, collections;
+        authors = new String[cursor.getCount()];
+        titles = new String[cursor.getCount()];
+        isbns = new String[cursor.getCount()];
+        pubdates = new String[cursor.getCount()];
+        descs = new String[cursor.getCount()];
+        imgurls = new String[cursor.getCount()];
+        collections = new String[cursor.getCount()];
+
+        if(cursor.moveToFirst())
+        {
+            int p = 0;
+            do {
+                Log.d("Processing book", "" + p);
+                int columnIndex = cursor.getColumnIndex(Database.AUTHOR);
+                authors[p] = cursor.getString(columnIndex);
+                Log.d("Author", authors[p]);
+                columnIndex = cursor.getColumnIndex(Database.TITLE);
+                titles[p] = cursor.getString(columnIndex);
+                Log.d("Title", titles[p]);
+                columnIndex = cursor.getColumnIndex(Database.ISBN);
+                isbns[p] = cursor.getString(columnIndex);
+                columnIndex = cursor.getColumnIndex(Database.PUBLISHED);
+                pubdates[p] = cursor.getString(columnIndex);
+                columnIndex = cursor.getColumnIndex(Database.DESCRIPTION);
+                descs[p] = cursor.getString(columnIndex);
+                columnIndex = cursor.getColumnIndex(Database.IMGURL);
+                imgurls[p] = cursor.getString(columnIndex);
+                columnIndex = cursor.getColumnIndex(Database.COLLECTION);
+                collections[p] = cursor.getString(columnIndex);
+                p++;
+            } while(cursor.moveToNext());
+
+
+            Log.d(getClass().getName(), "Result received.");
+            Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
+            searchResultsIntent.putExtra("author", authors);
+            searchResultsIntent.putExtra("title", titles);
+            searchResultsIntent.putExtra("isbn", isbns);
+            searchResultsIntent.putExtra("published", pubdates);
+            searchResultsIntent.putExtra("description", descs);
+            searchResultsIntent.putExtra("img", imgurls);
+            searchResultsIntent.putExtra("collection", collections);
+            searchResultsIntent.putExtra("mode", false);
+            startActivityForResult(searchResultsIntent, 0);
+
+        }
+    }
+
+    private String buildQuery(String t, String a, String i) {
         String query = "https://www.googleapis.com/books/v1/volumes?q=";
         boolean termsAdded = false;
         if(t.length() > 0){
@@ -93,12 +155,6 @@ public class SearchScreen extends Activity implements View.OnClickListener {
             a = a.replaceAll(" ", ",");
             query += "inauthor:" + a;
         }
-        if(g.length() > 0){
-            if(termsAdded) query += "+";
-            else termsAdded = true;
-            g = g.replaceAll(" ", ",");
-            query += "insubject:" + g;
-        }
         if(i.length() > 0){
             if(termsAdded) query += "+";
             else termsAdded = true;
@@ -107,7 +163,8 @@ public class SearchScreen extends Activity implements View.OnClickListener {
         }
 
         query += "&key=AIzaSyBWUqhTT8y4aC9hyFgjenA3lhqi1cnV0R0&fields=items(volumeInfo"
-                + "/title,volumeInfo/authors,volumeInfo/industryIdentifiers)";
+                + "/title,volumeInfo/authors,volumeInfo/publishedDate,volumeInfo/description,"
+                + "volumeInfo/industryIdentifiers)";
 
         return query;
     }

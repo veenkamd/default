@@ -5,6 +5,7 @@ public final class Database {
     public static final String BOOK_TBL    = "book";
     public static final String TITLE       = "title";
     public static final String AUTHOR      = "author";
+    public static final String PUBLISHED   = "published";
     public static final String GENRE       = "genre";
     public static final String ISBN        = "isbn";
     public static final String DESCRIPTION = "description";
@@ -31,6 +32,7 @@ public final class Database {
             + LOANED_TO + " varchar(50), "
             + NUM_PAGES + " integer, "
             + AUTHOR + " varchar(50) not null, "
+            + PUBLISHED + " varchar(10) not null, "
             + COLLECTION + " integer not null, "
             + IMGURL + " varchar(200) not null, "
             + RATING + " integer, "
@@ -47,6 +49,8 @@ public final class Database {
     public static final String SELECT_ALL_COLLECTIONS = "SELECT * FROM collection";
     public static final String SELECT_BOOK_TITLES_FOR_COLLECTION =
             "SELECT title FROM book WHERE collection = ?";
+    public static final String SELECT_BOOK_FROM_SEARCH =
+            "SELECT DISTINCT * FROM book WHERE (title LIKE ? AND author LIKE ?) OR isbn = ?";
     public static final String SELECT_BOOK_DETAILS =
             "SELECT * FROM book WHERE title = ? AND collection = ?";
     public static final String SELECT_LOANED_TO_BY_ISBN =

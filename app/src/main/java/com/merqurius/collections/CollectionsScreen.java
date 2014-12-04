@@ -172,6 +172,10 @@ public class CollectionsScreen extends Activity {
                     detailsIntent.putExtra("title", cursor.getString(columnIndex));
                     columnIndex = cursor.getColumnIndex(Database.ISBN);
                     detailsIntent.putExtra("isbn", cursor.getString(columnIndex));
+                    columnIndex = cursor.getColumnIndex(Database.PUBLISHED);
+                    detailsIntent.putExtra("published", cursor.getString(columnIndex));
+                    columnIndex = cursor.getColumnIndex(Database.DESCRIPTION);
+                    detailsIntent.putExtra("description", cursor.getString(columnIndex));
                     columnIndex = cursor.getColumnIndex(Database.IMGURL);
                     detailsIntent.putExtra("img", cursor.getString(columnIndex));
                     columnIndex = cursor.getColumnIndex(Database.COLLECTION);

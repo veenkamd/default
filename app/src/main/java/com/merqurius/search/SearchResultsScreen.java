@@ -31,6 +31,14 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
     String[] authors;
     String[] titles;
     String[] isbns;
+    String[] pubdates;
+    String[] descs;
+    String[] imgurls;
+    String[] collections;
+    Boolean online, endReached;
+    int numResults;
+
+
     LinearLayout layout, pagingLayout;
     LinearLayout.LayoutParams params, pagingParams;
 
@@ -51,18 +59,37 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         pagingParams.setMargins(12, 24, 12, 12);
 
-        authors = new String[10];
-        titles = new String[10];
-        isbns = new String[10];
-
         Intent searchResultsIntent = getIntent();
-        q = searchResultsIntent.getStringExtra("query");
-        r = searchResultsIntent.getStringExtra("response");
-        parseText(r);
-        boolean endReached = false;
-        if(foundStuff) {
-            result = new Button[10];
-            for (int i = 0; i < 10; i++) {
+        online = searchResultsIntent.getBooleanExtra("mode", true);
+
+        if(online) {
+            authors = new String[10];
+            titles = new String[10];
+            isbns = new String[10];
+            pubdates = new String[10];
+            descs = new String[10];
+
+            q = searchResultsIntent.getStringExtra("query");
+            r = searchResultsIntent.getStringExtra("response");
+            parseText(r);
+            numResults = 10;
+        } else {
+            authors = searchResultsIntent.getStringArrayExtra("author");
+            titles = searchResultsIntent.getStringArrayExtra("title");
+            isbns = searchResultsIntent.getStringArrayExtra("isbn");
+            pubdates = searchResultsIntent.getStringArrayExtra("published");
+            descs = searchResultsIntent.getStringArrayExtra("description");
+            imgurls = searchResultsIntent.getStringArrayExtra("img");
+            collections = searchResultsIntent.getStringArrayExtra("collection");
+            if(titles.length < 1)
+                foundStuff = false;
+            else foundStuff = true;
+            numResults = titles.length;
+        }
+        endReached = false;
+        if (foundStuff) {
+            result = new Button[numResults];
+            for (int i = 0; i < numResults; i++) {
                 if (titles[i] != null) {
                     result[i] = new Button(this);
                     result[i].setId(i);
@@ -74,8 +101,7 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                     result[i].setClickable(true);
                     result[i].setOnClickListener(this);
                     layout.addView(result[i]);
-                }
-                else
+                } else
                     endReached = true;
             }
         } else {
@@ -85,40 +111,42 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
         }
 
 
-        //prevId = View.generateViewId(); //conflicted with results buttons
-        prevId = 10; //shows error in editor but compiles and runs correctly
-        prev = new Button(this);
-        prev.setId(prevId);
-        prev.setLayoutParams(pagingParams);
-        prev.setTextColor(Color.WHITE);
-        prev.setTypeface(null, Typeface.BOLD);
-        prev.setBackgroundColor(inActiveColor);
-        prev.setText("<-Prev");
-        prev.setClickable(false);
-        prev.setOnClickListener(this);
-        pagingLayout.addView(prev);
 
-        //nextId = View.generateViewId();
-        nextId = 11;
-        next = new Button(this);
-        next.setId(nextId);
-        next.setLayoutParams(pagingParams);
-        next.setTextColor(Color.WHITE);
-        next.setTypeface(null, Typeface.BOLD);
-        next.setText("Next->");
-        if (endReached) {
-            next.setBackgroundColor(inActiveColor);
-            next.setClickable(false);
-        } else {
-            next.setBackgroundColor(activeColor);
-            next.setClickable(true);
-        }
-        next.setOnClickListener(this);
-        pagingLayout.addView(next);
+            //prevId = View.generateViewId(); //conflicted with results buttons
+            prevId = 97; //shows error in editor but compiles and runs correctly
+            prev = new Button(this);
+            prev.setId(prevId);
+            prev.setLayoutParams(pagingParams);
+            prev.setTextColor(Color.WHITE);
+            prev.setTypeface(null, Typeface.BOLD);
+            prev.setBackgroundColor(inActiveColor);
+            prev.setText("<-Prev");
+            prev.setClickable(false);
+            prev.setOnClickListener(this);
+            pagingLayout.addView(prev);
 
-        layout.addView(pagingLayout);
+            //nextId = View.generateViewId();
+            nextId = 98;
+            next = new Button(this);
+            next.setId(nextId);
+            next.setLayoutParams(pagingParams);
+            next.setTextColor(Color.WHITE);
+            next.setTypeface(null, Typeface.BOLD);
+            next.setText("Next->");
+            if (endReached) {
+                next.setBackgroundColor(inActiveColor);
+                next.setClickable(false);
+            } else {
+                next.setBackgroundColor(activeColor);
+                next.setClickable(true);
+            }
+            next.setOnClickListener(this);
+            pagingLayout.addView(next);
 
-        currIndex = 0;
+            if(online) layout.addView(pagingLayout);
+
+            currIndex = 0;
+
     }
 
     private void parseText(String response){
@@ -158,7 +186,7 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
 
                 titles[i] = tok;
                 foundStuff = true;
-                while(!tok.equals("authors") && !tok.equals("industryIdentifiers") && !tok.equals("title")){
+                while(!tok.equals("authors") && !tok.equals("publishedDate") && !tok.equals("description") && !tok.equals("industryIdentifiers") && !tok.equals("title")){
                     if(!st.hasMoreTokens()){
                         //endList = true;
                         break;
@@ -172,12 +200,41 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                 else
                     authors[i] = "";
 
+                while(!tok.equals("publishedDate") && !tok.equals("description") && !tok.equals("industryIdentifiers") && !tok.equals("title")) {
+                    if(!st.hasMoreTokens()){
+                        break;
+                    }
+                    tok = st.nextToken();
+                }
+                if(tok.equals("publishedDate")) {
+                    tok = st.nextToken("\"");
+                    pubdates[i] = st.nextToken("\"");
+                }
+
+                while(!tok.equals("description") && !tok.equals("industryIdentifiers") && !tok.equals("title")) {
+                    if(!st.hasMoreTokens()){
+                        break;
+                    }
+                    tok = st.nextToken();
+                }
+                if(tok.equals("description")) {
+                    tok = st.nextToken("\"");
+                    descs[i] = st.nextToken("\"");
+                }
+
                 while(!tok.equals("industryIdentifiers") && !tok.equals("title")) {
                     if(!st.hasMoreTokens()) {
                         endList = true;
                         break;
                     }
                     tok = st.nextToken();
+                    if(descs[i] != null && !descs[i].equals("") && !tok.equals("industryIdentifiers") && !tok.equals("title"))
+                        descs[i] += tok;
+                }
+                if(descs[i] != null && !descs[i].equals("")) {
+                    descs[i] = descs[i].replaceAll("\\\\", "\""); //fix quotes
+                    descs[i] = descs[i].trim();
+                    descs[i] = descs[i].substring(0, descs[i].length() - 1); //remove end-of-field comma
                 }
 
 
@@ -300,36 +357,45 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(m);
             builder.show();*/
-
-            //retrieve thumbnail url
-            String imgq = "https://www.googleapis.com/books/v1/volumes?q=";
-            if(isbns[i] == null) {
-                imgq += "intitle:" + titles[i];
-                if(authors[i] != null)
-                    imgq += "+inauthor:" + (authors[i]).replaceAll(" ", ",");
-            } else
-                imgq += "isbn:" + isbns[i];
-            imgq += "&key=AIzaSyBWUqhTT8y4aC9hyFgjenA3lhqi1cnV0R0&fields=items(volumeInfo/imageLinks/thumbnail)";
-
-            String imgr = fetchResults(imgq);
-            if(! imgr.equals("Unable to Connect")){
-                StringTokenizer st = new StringTokenizer(imgr, "{}[]\"\t\n");
-                while(st.hasMoreTokens() && ! st.nextToken().equals("thumbnail")){
-
-                    //Log.d(getClass().getName(), "token: " +  st.nextToken());
-                }
-                if(st.hasMoreTokens()){
-                    st.nextToken();
-                    imgr = st.nextToken();
+            String imgr = "";
+            if(online) {
+                //retrieve thumbnail url
+                String imgq = "https://www.googleapis.com/books/v1/volumes?q=";
+                if (isbns[i] == null) {
+                    imgq += "intitle:" + titles[i];
+                    if (authors[i] != null)
+                        imgq += "+inauthor:" + (authors[i]).replaceAll(" ", ",");
                 } else
-                    imgr = "";
+                    imgq += "isbn:" + isbns[i];
+                imgq += "&key=AIzaSyBWUqhTT8y4aC9hyFgjenA3lhqi1cnV0R0&fields=items(volumeInfo/imageLinks/thumbnail)";
+
+                imgr = fetchResults(imgq);
+                if (!imgr.equals("Unable to Connect")) {
+                    StringTokenizer st = new StringTokenizer(imgr, "{}[]\"\t\n");
+                    while (st.hasMoreTokens() && !st.nextToken().equals("thumbnail")) {
+
+                        //Log.d(getClass().getName(), "token: " +  st.nextToken());
+                    }
+                    if (st.hasMoreTokens()) {
+                        st.nextToken();
+                        imgr = st.nextToken();
+                    } else
+                        imgr = "";
+                }
             }
 
             Intent detailsIntent = new Intent (v.getContext(), BookDetailsScreen.class);
             detailsIntent.putExtra("author", authors[i]);
             detailsIntent.putExtra("title", titles[i]);
             detailsIntent.putExtra("isbn", isbns[i]);
-            detailsIntent.putExtra("img", imgr);
+            detailsIntent.putExtra("published", pubdates[i]);
+            detailsIntent.putExtra("description", descs[i]);
+            if(online)
+                detailsIntent.putExtra("img", imgr);
+            else {
+                detailsIntent.putExtra("img", imgurls[i]);
+                detailsIntent.putExtra("collection", collections[i]);
+            }
             startActivityForResult(detailsIntent, 0);
 
         }

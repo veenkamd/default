@@ -3,6 +3,7 @@ package com.merqurius.test;
 public class Book {
     private String title;
     private String author;
+    private String published;
     private String isbn;
     private String genre;
     private String description;
@@ -13,9 +14,10 @@ public class Book {
     private int numPages;
     private int rating;
 
-    public Book(String t, String a, String i, String g, String d, String s, String l, String c, String iu, int n, int r){
+    public Book(String t, String a, String p, String i, String g, String d, String s, String l, String c, String iu, int n, int r){
         title = t;
         author = a;
+        published = p;
         isbn = i;
         genre = g;
         description = d;
@@ -30,6 +32,7 @@ public class Book {
     public Book(String t, String a, String i){
         title = t;
         author = a;
+        published = "unknown";
         isbn = i;
         genre = "unknown";
         description = "unknown";
@@ -56,6 +59,10 @@ public class Book {
     public void setAuthor(String author) {
         this.author = author;
     }
+
+    public void setPublished(String published) { this.published = published; }
+
+    public String getPublished() { return published; }
 
     public String getIsbn() {
         return isbn;

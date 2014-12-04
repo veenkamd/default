@@ -39,13 +39,13 @@ import java.util.List;
 
 
 public class BookDetailsScreen extends Activity implements View.OnClickListener {
-    Button remind, addBook, moveBook, loanButton;
+    Button remind, addBook, moveBook, loanButton, descButton;
     Spinner collectionSpinner;
     Book book;
-    TextView authortext, titletext, isbntext, loanedtext, collectiontext;
+    TextView authortext, titletext, isbntext, loanedtext, collectiontext, publishedtext;
     View promptsView, loanPromptView;
     ImageView thumbView;
-    String author, title, isbn, imgURL, loanName, loanedTo;
+    String author, title, isbn, pubdate, desc, imgURL, loanName, loanedTo;
 
     final Context context = this;
 
@@ -60,9 +60,11 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         isbntext = (TextView) findViewById(R.id.isbnText);
         loanedtext = (TextView) findViewById(R.id.loanedName);
         collectiontext = (TextView) findViewById(R.id.collectionText);
+        publishedtext = (TextView) findViewById(R.id.PublishedText);
 
         remind = (Button) findViewById(R.id.buttonRemind);
         loanButton = (Button) findViewById(R.id.buttonLoan);
+        descButton = (Button) findViewById(R.id.buttonDescription);
 
         Intent detailsIntent = getIntent();
 
@@ -70,6 +72,8 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             author = detailsIntent.getStringExtra("author");
             title = detailsIntent.getStringExtra("title");
             isbn = detailsIntent.getStringExtra("isbn");
+            pubdate = detailsIntent.getStringExtra("published");
+            desc = detailsIntent.getStringExtra("description");
             book = new Book(title, author, isbn);
             if(author != null)
                 authortext.setText(author);
@@ -82,6 +86,18 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             else {
                 titletext.setText("");
                 book.setTitle("unknown");
+            }
+            if(pubdate != null) {
+                publishedtext.setText(pubdate);
+                book.setPublished(pubdate);
+            } else {
+                publishedtext.setText("");
+                book.setPublished("unknown");
+            }
+            if(desc != null && desc.length() > 0)
+                book.setDescription(desc);
+            else {
+                book.setDescription("Not available");
             }
             if(isbn != null) {
                 fillBook(isbn);
@@ -142,6 +158,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
 
         remind.setOnClickListener(this);
         loanButton.setOnClickListener(this);
+        descButton.setOnClickListener(this);
         addListenerOnAddBookButton();
 
     }
@@ -199,6 +216,22 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
 
                     //add database stuff
                 }
+                break;
+            case R.id.buttonDescription:
+                Log.d(getClass().getName(), "Showing description");
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                builder.setCancelable(true)
+                    .setMessage(desc)
+                    .setNegativeButton("Done",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 break;
             default:
                 Log.d(getClass().getName(), "Clicked: " + v.getId());

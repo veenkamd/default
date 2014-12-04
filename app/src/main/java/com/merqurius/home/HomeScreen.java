@@ -42,7 +42,13 @@ public class HomeScreen extends Activity implements View.OnClickListener {
                 break;
             case R.id.buttonSearchBook:
                 Intent searchIntent = new Intent(v.getContext(), SearchScreen.class);
+                searchIntent.putExtra("mode", true);
                 startActivityForResult(searchIntent, 0);
+                break;
+            case R.id.buttonDetails:
+                Intent searchIntent2 = new Intent(v.getContext(), SearchScreen.class);
+                searchIntent2.putExtra("mode", false);
+                startActivityForResult(searchIntent2, 0);
                 break;
         }
     }

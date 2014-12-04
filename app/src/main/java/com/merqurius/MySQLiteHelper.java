@@ -54,6 +54,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return db.rawQuery(Database.SELECT_BOOK_TITLES_FOR_COLLECTION,new String[]{collectionName});
     }
 
+    public Cursor selectBookFromSearch(String title, String author, String isbn){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Log.d("Select from", title + " " + author + " " + isbn);
+        return db.rawQuery(Database.SELECT_BOOK_FROM_SEARCH, new String[]{title, author, isbn});
+    }
+
     public Cursor selectBookDetails(String title, String collectionName){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(Database.SELECT_BOOK_DETAILS, new String[]{title, collectionName});
@@ -74,6 +80,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         cv.put(Database.LOANED_TO, book.getLoaned_to());
         cv.put(Database.NUM_PAGES, book.getNumPages());
         cv.put(Database.AUTHOR, book.getAuthor());
+        cv.put(Database.PUBLISHED, book.getPublished());
         cv.put(Database.COLLECTION, book.getCollection());
         cv.put(Database.IMGURL, book.getImgURL());
         cv.put(Database.RATING, book.getRating());

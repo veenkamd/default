@@ -86,7 +86,7 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:height="60dp"
-        android:clickable="false"/>
+        android:clickable="true"/>
 
     <TextView
         android:layout_width="fill_parent"

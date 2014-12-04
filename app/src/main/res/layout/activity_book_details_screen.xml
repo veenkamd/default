@@ -62,6 +62,25 @@
                  />
         </TableRow>
 
+            <TableRow>
+                <TextView
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Published:"
+                    android:textColor="#ffffffff"
+                    android:id="@+id/bookPublished" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="1961"
+                    android:id="@+id/PublishedText"
+                    android:textColor="#ffffffff"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    />
+            </TableRow>
+
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
@@ -118,33 +137,43 @@
                     android:id="@+id/loanedName"
                     android:textColor="#ffffffff" />
             </TableRow>
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="30dp" />
             <TableRow
                 android:gravity="center_horizontal|center_vertical" >
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Remind Friend"
-                android:id="@+id/buttonRemind" />
-            </TableRow>
-            <TableRow
-                android:gravity="center_horizontal|center_vertical" >
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Start/End Loan"
-                android:id="@+id/buttonLoan"
-                android:clickable="true" />
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Start/End Loan"
+                    android:id="@+id/buttonLoan"
+                    android:clickable="true" />
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Remind Friend"
+                    android:id="@+id/buttonRemind" />
             </TableRow>
             <TableRow
             android:gravity="center_horizontal|center_vertical" >
                 <Button
                     style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Change Collection"
                     android:id="@+id/buttonCollection" />
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Veiw Description"
+                    android:id="@+id/buttonDescription" />
             </TableRow>
 
 
