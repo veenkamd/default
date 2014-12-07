@@ -2,6 +2,7 @@ package com.merqurius.search;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,17 +26,17 @@ public class SearchScanScreen extends Activity {
         setContentView(R.layout.activity_scan);
 
         // starting the scanner
-        /*IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.addExtra("SCAN_WIDTH", 640);
-        integrator.addExtra("SCAN_HEIGHT", 480);
-        integrator.addExtra("SCAN_MODE", "PRODUCT_MODE");
-
-        integrator.addExtra("PROMPT_MESSAGE", "Scanner Start!");
-        integrator.initiateScan(IntentIntegrator.PRODUCT_CODE_TYPES);*/
-
-        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-        intent.putExtra("SCAN_MODE", "SCAN_MODE");
-        startActivityForResult(intent, 0);
+        try {
+            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            intent.putExtra("SCAN_MODE", "SCAN_MODE");
+            startActivityForResult(intent, 0);
+        } catch (ActivityNotFoundException e){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Please install the Barcode Scanner app before trying to scan a book.");
+            builder.show();
+            Intent homeIntent = new Intent(context, HomeScreen.class);
+            startActivityForResult(homeIntent, 0);
+        }
     }
 
 
@@ -62,17 +63,17 @@ public class SearchScanScreen extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         String barcodeScan;
-        View v = this.findViewById(R.id.buttonScanBook);
         if (resultCode == Activity.RESULT_OK){
              barcodeScan = intent.getStringExtra("SCAN_RESULT");
              String q = buildQuery(barcodeScan);
              String r = fetchResults(q);
              if(! r.equals("Unable to Connect")) {
-                Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
+                Intent searchResultsIntent = new Intent(context, SearchResultsScreen.class);
                 searchResultsIntent.putExtra("query", q);
                 searchResultsIntent.putExtra("response", r);
                 Log.d(getClass().getName(), "Forwarding to results screen.");
-                startActivityForResult(searchResultsIntent, 0);
+                startActivityForResult(searchResultsIntent, 0); // needs to be changed to send results directly
+                                                                // to book details screen
              } else {
                 builder.setMessage(r);
                 builder.show();
@@ -80,7 +81,7 @@ public class SearchScanScreen extends Activity {
         } else {
             builder.setMessage("The scan did not work. Please try again.");
             builder.show();
-            Intent homeIntent = new Intent(v.getContext(), HomeScreen.class);
+            Intent homeIntent = new Intent(context, HomeScreen.class);
             startActivityForResult(homeIntent, 0);
         }
 
