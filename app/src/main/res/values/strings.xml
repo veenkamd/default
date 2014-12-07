@@ -32,5 +32,6 @@
     <string name="title_activity_email_screen">EmailScreen</string>
     <string name="email_hint">somebody@email.com</string>
     <string name="title_activity_search_results">Search Results</string>
+    <string name="title_activity_activity_scan">activity_scan</string>
 
 </resources>

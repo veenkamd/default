@@ -12,11 +12,12 @@ import com.merqurius.R;
 import com.merqurius.book.details.BookDetailsScreen;
 import com.merqurius.collections.CollectionsScreen;
 import com.merqurius.search.SearchScreen;
+import com.merqurius.search.SearchScanScreen;
 
 
 public class HomeScreen extends Activity implements View.OnClickListener {
 
-    Button collections, search, detailsPlaceholder;
+    Button collections, search, detailsPlaceholder, scan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,10 +26,12 @@ public class HomeScreen extends Activity implements View.OnClickListener {
         collections = (Button) findViewById(R.id.buttonGoToLibrary);
         search = (Button) findViewById(R.id.buttonSearchBook);
         detailsPlaceholder = (Button) findViewById(R.id.buttonDetails);
+        scan = (Button) findViewById(R.id.buttonScanBook);
 
         collections.setOnClickListener(this);
         search.setOnClickListener(this);
         detailsPlaceholder.setOnClickListener(this);
+        scan.setOnClickListener(this);
 
 
     }
@@ -44,6 +47,10 @@ public class HomeScreen extends Activity implements View.OnClickListener {
                 Intent searchIntent = new Intent(v.getContext(), SearchScreen.class);
                 searchIntent.putExtra("mode", true);
                 startActivityForResult(searchIntent, 0);
+                break;
+            case R.id.buttonScanBook:
+                Intent scanIntent = new Intent(v.getContext(), SearchScanScreen.class);
+                startActivityForResult(scanIntent, 0);
                 break;
             case R.id.buttonDetails:
                 Intent searchIntent2 = new Intent(v.getContext(), SearchScreen.class);

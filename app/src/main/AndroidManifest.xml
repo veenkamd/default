@@ -3,6 +3,7 @@
     package="com.merqurius" >
 
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -31,7 +32,8 @@
             android:name=".search.SearchScreen"
             android:label="Search" >
         </activity>
-        <activity android:name=".search.SearchResultsScreen"
+        <activity
+            android:name=".search.SearchResultsScreen"
             android:label="Search Results" >
         </activity>
         <activity
@@ -45,6 +47,10 @@
         <activity
             android:name=".search.SearchResults"
             android:label="@string/title_activity_search_results" >
+        </activity>
+        <activity
+            android:name=".search.SearchScanScreen"
+            android:label="@string/title_activity_activity_scan" >
         </activity>
     </application>
 
