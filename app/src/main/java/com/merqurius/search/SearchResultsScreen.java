@@ -70,11 +70,12 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             isbns = new String[10];
             pubdates = new String[10];
             descs = new String[10];
-
+            Log.d(getClass().getName(), "Online query");
             q = searchResultsIntent.getStringExtra("query");
             r = searchResultsIntent.getStringExtra("response");
-            parseText(r);
             numResults = 10;
+            parseText(r);
+
         } else {
             authors = searchResultsIntent.getStringArrayExtra("author");
             titles = searchResultsIntent.getStringArrayExtra("title");
@@ -163,7 +164,7 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
         else
             tok = st.nextToken();
 
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < numResults; i++){
             Log.d(getClass().getName(), "Processing book " + i + "...");
 
             if(endList)
@@ -224,19 +225,25 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                     descs[i] = st.nextToken("\"");
                 }
 
+                boolean endOfDesc = false;
                 while(!tok.equals("industryIdentifiers") && !tok.equals("title")) {
                     if(!st.hasMoreTokens()) {
                         endList = true;
                         break;
                     }
                     tok = st.nextToken();
-                    if(descs[i] != null && !descs[i].equals("") && !tok.equals("industryIdentifiers") && !tok.equals("title"))
-                        descs[i] += tok;
+                    if(descs[i] != null && !endOfDesc && !descs[i].equals("") && !tok.equals("industryIdentifiers") && !tok.equals("title")) {
+                        if(tok.contains("}"))
+                            endOfDesc = true;
+                        else
+                            descs[i] += tok;
+                    }
                 }
                 if(descs[i] != null && !descs[i].equals("")) {
                     descs[i] = descs[i].replaceAll("\\\\", "\""); //fix quotes
                     descs[i] = descs[i].trim();
-                    descs[i] = descs[i].substring(0, descs[i].length() - 1); //remove end-of-field comma
+                    if(!endOfDesc)
+                        descs[i] = descs[i].substring(0, descs[i].length() - 1); //remove end-of-field comma
                 }
 
 
