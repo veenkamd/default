@@ -26,7 +26,6 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
 
     String q, r;
     int prevId, nextId, currIndex;
-    static int activeColor = 0xff5ff4ff, inActiveColor = 0xeeeeee;
     boolean foundStuff;
     Button prev, next;
     Button[] result;
@@ -99,7 +98,6 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                     result[i].setLayoutParams(params);
                     result[i].setTextColor(Color.WHITE);
                     result[i].setTypeface(null, Typeface.BOLD);
-                    result[i].setBackgroundColor(activeColor);
                     result[i].setText(authors[i] + ": \"" + titles[i] + "\"");
                     result[i].setClickable(true);
                     result[i].setOnClickListener(this);
@@ -122,7 +120,6 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             prev.setLayoutParams(pagingParams);
             prev.setTextColor(Color.WHITE);
             prev.setTypeface(null, Typeface.BOLD);
-            prev.setBackgroundColor(inActiveColor);
             prev.setText("<-Prev");
             prev.setClickable(false);
             prev.setOnClickListener(this);
@@ -137,10 +134,8 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             next.setTypeface(null, Typeface.BOLD);
             next.setText("Next->");
             if (endReached) {
-                next.setBackgroundColor(inActiveColor);
                 next.setClickable(false);
             } else {
-                next.setBackgroundColor(activeColor);
                 next.setClickable(true);
             }
             next.setOnClickListener(this);
@@ -336,17 +331,13 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                             endReached = true;
                     }
                     if (currIndex > 0) {
-                        prev.setBackgroundColor(activeColor);
                         prev.setClickable(true);
                     } else {
-                        prev.setBackgroundColor(inActiveColor);
                         prev.setClickable(false);
                     }
                     if (endReached) {
-                        next.setBackgroundColor(inActiveColor);
                         next.setClickable(false);
                     } else {
-                        next.setBackgroundColor(activeColor);
                         next.setClickable(true);
                     }
                     layout.addView(pagingLayout);
