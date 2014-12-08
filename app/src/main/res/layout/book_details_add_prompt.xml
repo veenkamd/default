@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:weightSum="1"
-    android:background="#ff2889ff">
+    android:background="#f1f1f1f1">
 
     <TextView
         android:id="@+id/selectCollectionPrompt"
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Select Collection: "
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#ffffff" />
+        android:textColor="#ff000000" />
 
     <Spinner
         android:id="@+id/collectionSpinner"
