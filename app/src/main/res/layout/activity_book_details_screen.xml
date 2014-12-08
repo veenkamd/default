@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="#ff2889ff">
+    android:background="@drawable/bookshelf_frost2">
     <ScrollView
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
@@ -11,7 +11,7 @@
             android:layout_height="fill_parent"
             android:stretchColumns="1"
             android:shrinkColumns="1"
-            android:background="#ff2889ff"
+
             tools:context=".BookDetails"
             android:id="@+id/detailScreen">
 
@@ -172,7 +172,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Veiw Description"
+                    android:text="View Description"
                     android:id="@+id/buttonDescription" />
             </TableRow>
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff2889ff"
+    android:background="@drawable/bookshelf_frost2"
     android:orientation="vertical">
 
     <EditText android:id="@+id/title_text"
@@ -31,7 +31,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ff2889ff"
         android:orientation="horizontal"
         android:gravity="right">
         <Button
