@@ -18,6 +18,8 @@ import com.merqurius.Database;
 import com.merqurius.MySQLiteHelper;
 import com.merqurius.R;
 import com.merqurius.book.details.BookDetailsScreen;
+import com.merqurius.collections.CollectionsScreen;
+import com.merqurius.home.HomeScreen;
 import com.merqurius.search.SearchResultsScreen;
 
 import java.io.BufferedReader;
@@ -191,9 +193,13 @@ public class SearchScreen extends Activity implements View.OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.menuHome: startActivity(new Intent( this, HomeScreen.class));
+                break;
+            case R.id.menuCollections: startActivity(new Intent(this, CollectionsScreen.class));
+                break;
+            case R.id.action_settings:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

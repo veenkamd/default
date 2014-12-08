@@ -42,14 +42,15 @@
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="15"
+        android:text=""
         android:id="@+id/editEmailAddress"
+        android:textColor="#ffffffff"
         android:layout_below="@+id/textEmail"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -67,5 +68,7 @@
         android:textColor="#ffffffff"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+
 
 </RelativeLayout>

@@ -28,6 +28,8 @@ import android.widget.TextView;
 import com.merqurius.Database;
 import com.merqurius.MySQLiteHelper;
 import com.merqurius.R;
+import com.merqurius.collections.CollectionsScreen;
+import com.merqurius.home.HomeScreen;
 import com.merqurius.test.Book;
 
 import java.io.BufferedInputStream;
@@ -251,9 +253,13 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.menuHome: startActivity(new Intent( this, HomeScreen.class));
+                break;
+            case R.id.menuCollections: startActivity(new Intent(this, CollectionsScreen.class));
+                break;
+            case R.id.action_settings:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
