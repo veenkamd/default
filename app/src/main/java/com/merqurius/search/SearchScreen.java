@@ -198,7 +198,7 @@ public class SearchScreen extends Activity implements View.OnClickListener {
                 break;
             case R.id.menuCollections: startActivity(new Intent(this, CollectionsScreen.class));
                 break;
-            
+
         }
         return super.onOptionsItemSelected(item);
     }

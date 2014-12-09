@@ -128,6 +128,9 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
             book.setCollection(detailsIntent.getStringExtra("collection"));
         collectiontext.setText(book.getCollection());
 
+        if(book.getCollection().equals("Not owned"))
+            loanButton.setEnabled(false);
+
         thumbView = (ImageView) findViewById(R.id.bookCover);
 
         try {
@@ -143,6 +146,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
 
 
         addBook = (Button) findViewById(R.id.buttonCollection);
+
         /*Going to need something here like:
         if(book != null && !Strings.isEmpty(book.getCollection())){
             moveBook = (Button) findViewById(R.id.buttonMoveCollection);
@@ -296,6 +300,7 @@ public class BookDetailsScreen extends Activity implements View.OnClickListener 
                                             updateBook(collectionSpinner.getSelectedItem().toString());
                                             Log.d("Inserting to:", collectionSpinner.getSelectedItem().toString());
                                         }
+                                        loanButton.setEnabled(true);
                                         collectiontext.setText(book.getCollection());
 
                                     }
