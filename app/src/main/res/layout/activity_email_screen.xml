@@ -30,7 +30,8 @@
         android:layout_below="@+id/emailHeader"
         android:layout_alignParentStart="true"
         android:layout_marginTop="61dp"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:editable="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,10 +40,10 @@
         android:text="Message"
         android:id="@+id/textMessage"
         android:textColor="#ffffffff"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/editEmailAddress"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -57,6 +58,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editMessage"
         android:layout_below="@+id/textMessage"
+        android:textColor="#ffffffff"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 
@@ -66,8 +68,9 @@
         android:text="Send"
         android:id="@+id/buttonSend"
         android:textColor="#ffffffff"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_toEndOf="@+id/emailHeader"
+        android:layout_below="@+id/editMessage"
+        android:layout_alignEnd="@+id/editMessage" />
 
 
 

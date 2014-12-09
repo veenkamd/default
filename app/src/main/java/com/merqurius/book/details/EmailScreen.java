@@ -47,7 +47,7 @@ public class EmailScreen extends Activity implements View.OnClickListener {
         email.setOnClickListener(this);
 
         selectContact();
-        address.setText(contactAddress);
+
 
     }
     public void onClick(View v) {
@@ -118,6 +118,7 @@ public class EmailScreen extends Activity implements View.OnClickListener {
                 int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
                 contactAddress = cursor.getString(numberIndex);
                 Log.d(getClass().getName(), contactAddress);
+                address.setText(contactAddress);
             }
         }
     }

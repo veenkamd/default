@@ -54,7 +54,7 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
 
         params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, 0, 12, 12);
+        params.setMargins(12, 0, 12, 0);
 
         pagingParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -121,7 +121,7 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             prev.setTextColor(Color.WHITE);
             prev.setTypeface(null, Typeface.BOLD);
             prev.setText("<-Prev");
-            prev.setClickable(false);
+            prev.setEnabled(false);
             prev.setOnClickListener(this);
             pagingLayout.addView(prev);
 
@@ -134,9 +134,9 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             next.setTypeface(null, Typeface.BOLD);
             next.setText("Next->");
             if (endReached) {
-                next.setClickable(false);
+                next.setEnabled(false);
             } else {
-                next.setClickable(true);
+                next.setEnabled(true);
             }
             next.setOnClickListener(this);
             pagingLayout.addView(next);
@@ -331,14 +331,14 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                             endReached = true;
                     }
                     if (currIndex > 0) {
-                        prev.setClickable(true);
+                        prev.setEnabled(true);
                     } else {
-                        prev.setClickable(false);
+                        prev.setEnabled(false);
                     }
                     if (endReached) {
-                        next.setClickable(false);
+                        next.setEnabled(false);
                     } else {
-                        next.setClickable(true);
+                        next.setEnabled(true);
                     }
                     layout.addView(pagingLayout);
                 } else {

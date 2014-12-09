@@ -29,8 +29,9 @@
                 android:padding="3dip"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/bookdetails_title"
-                android:textColor="@android:color/black"
-                android:id="@+id/bookTitle"/>
+                android:textColor="@android:color/white"
+                android:id="@+id/bookTitle"
+                android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,15 +40,17 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Catch-22"
                 android:id="@+id/titleText"
-                android:textColor="#ff000000" />
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow>
             <TextView
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/bookdetails_author"
-                android:textColor="#ff000000"
-                android:id="@+id/bookAuthor" />
+                android:textColor="@android:color/white"
+                android:id="@+id/bookAuthor"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,18 +58,19 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Joseph Heller"
                 android:id="@+id/authorText"
-                android:textColor="#ff000000"
+                android:textColor="@android:color/white"
                 android:gravity="right"
                 android:padding="3dip"
-                 />
+                android:textStyle="bold" />
         </TableRow>
 
             <TableRow>
                 <TextView
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Published:"
-                    android:textColor="#ff000000"
-                    android:id="@+id/bookPublished" />
+                    android:textColor="@android:color/white"
+                    android:id="@+id/bookPublished"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,10 +78,10 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="1961"
                     android:id="@+id/PublishedText"
-                    android:textColor="#ff000000"
+                    android:textColor="@android:color/white"
                     android:gravity="right"
                     android:padding="3dip"
-                    />
+                    android:textStyle="bold" />
             </TableRow>
 
         <TableRow>
@@ -86,8 +90,9 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/bookdetails_collection"
-                android:textColor="#ff000000"
-                android:id="@+id/collectionTag"/>
+                android:textColor="@android:color/white"
+                android:id="@+id/collectionTag"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -97,7 +102,8 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:id="@+id/collectionText"
-                android:textColor="#ff000000" />
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
         </TableRow>
 
         <TableRow>
@@ -106,17 +112,19 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/bookdetails_isbn"
-                android:textColor="#ff000000"
-                android:id="@+id/bookIsbn" />
+                android:textColor="@android:color/white"
+                android:id="@+id/bookIsbn"
+                android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="978-1451626650"
                 android:id="@+id/isbnText"
-                android:textColor="#ff000000"
+                android:textColor="@android:color/white"
                 android:gravity="right"
-                android:padding="3dip" />
+                android:padding="3dip"
+                android:textStyle="bold" />
         </TableRow>
 
             <TableRow>
@@ -124,8 +132,9 @@
                     android:padding="3dip"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Loaned to:"
-                    android:textColor="#ff000000"
-                    android:id="@+id/loanedTitle"/>
+                    android:textColor="@android:color/white"
+                    android:id="@+id/loanedTitle"
+                    android:textStyle="bold" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,7 +143,8 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Placeholder Name"
                     android:id="@+id/loanedName"
-                    android:textColor="#ff000000" />
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
             </TableRow>
             <Space
                 android:layout_width="1dp"
@@ -148,14 +158,18 @@
                     android:layout_weight="1"
                     android:text="Start/End Loan"
                     android:id="@+id/buttonLoan"
-                    android:clickable="true" />
+                    android:clickable="true"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
                 <Button
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Remind Friend"
-                    android:id="@+id/buttonRemind" />
+                    android:id="@+id/buttonRemind"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
             </TableRow>
             <TableRow
             android:gravity="center_horizontal|center_vertical" >
@@ -165,14 +179,18 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Change Collection"
-                    android:id="@+id/buttonCollection" />
+                    android:id="@+id/buttonCollection"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
                 <Button
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="View Description"
-                    android:id="@+id/buttonDescription" />
+                    android:id="@+id/buttonDescription"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
             </TableRow>
 
 

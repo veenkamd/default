@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Collection"
-        android:id="@+id/add_collection_button" />
+        android:id="@+id/add_collection_button"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
     <ExpandableListView
         android:layout_width="match_parent"
@@ -17,9 +19,12 @@
         android:id="@+id/expandableListView"
         android:layout_gravity="center_horizontal"
         android:clickable="false"
-        android:childDivider="#000"
+        android:childDivider="#ff33b5e5"
         tools:listheader="@android:layout/simple_list_item_1"
         tools:listitem="@android:layout/simple_list_item_1"
         android:headerDividersEnabled="false"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:groupIndicator="@color/orange"
+        android:fastScrollEnabled="false"
+        android:childIndicator="@android:color/white" />
 </LinearLayout>

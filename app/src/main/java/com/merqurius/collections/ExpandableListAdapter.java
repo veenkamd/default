@@ -51,6 +51,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
+        txtListChild.setTextColor(Color.parseColor("#ffffff"));
+        txtListChild.setTypeface(null, Typeface.BOLD);
         txtListChild.setText(childText);
         return convertView;
     }
@@ -83,11 +85,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.collections_group, null);
         }
-
+        convertView.setBackgroundColor(Color.parseColor("#ff33b5e5"));
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(collectionTitle);
         lblListHeader.setTextColor(Color.parseColor("#FFFFFFFF"));
+        //lblListHeader.setBackgroundColor(Color.parseColor("#ffffa544"));
 
         return convertView;
     }
