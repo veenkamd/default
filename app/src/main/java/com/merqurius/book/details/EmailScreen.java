@@ -24,7 +24,7 @@ import com.merqurius.home.HomeScreen;
 
 public class EmailScreen extends Activity implements View.OnClickListener {
     Button email;
-    TextView address;
+    EditText address;
     EditText message;
     String title, loanName, contactAddress;
 
@@ -39,7 +39,7 @@ public class EmailScreen extends Activity implements View.OnClickListener {
         title = getIntent().getStringExtra("bookTitle");
         loanName = getIntent().getStringExtra("loanedName");
 
-        address = (TextView) findViewById((R.id.editEmailAddress));
+        address = (EditText) findViewById((R.id.editEmailAddress));
         message = (EditText) findViewById(R.id.editMessage);
 
         email = (Button) findViewById(R.id.buttonSend);
@@ -47,7 +47,6 @@ public class EmailScreen extends Activity implements View.OnClickListener {
         email.setOnClickListener(this);
 
         selectContact();
-        address.setText(contactAddress);
 
     }
     public void onClick(View v) {
@@ -118,6 +117,7 @@ public class EmailScreen extends Activity implements View.OnClickListener {
                 int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
                 contactAddress = cursor.getString(numberIndex);
                 Log.d(getClass().getName(), contactAddress);
+                address.setText(contactAddress);
             }
         }
     }
