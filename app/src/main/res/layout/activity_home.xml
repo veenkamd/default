@@ -7,19 +7,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".Home"
-    android:background="#ff2889ff">
+    android:background="@drawable/bookshelf_frost3">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/home_titleLine1"
-        android:id="@+id/title_line1"
-        android:textColor="@android:color/white"
-        android:textAlignment="center"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="30sp" />
+
 
     <Button
         android:layout_width="wrap_content"
@@ -29,7 +19,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/buttonScanBook"
-        android:background="#ff5ff4ff"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textSize="30sp"
@@ -48,7 +37,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/buttonGoToLibrary"
         android:layout_alignEnd="@+id/buttonGoToLibrary"
-        android:background="#ff5ff4ff"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="#ffffff"
@@ -64,7 +52,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="#ff5ff4ff"
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -81,7 +68,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/buttonSearchBook"
         android:layout_alignEnd="@+id/buttonSearchBook"
-        android:background="#ff5ff4ff"
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -110,8 +96,8 @@
         android:id="@+id/imageView"
         android:src="@drawable/app_title"
         android:contentDescription="@string/home_appDescription"
-        android:layout_alignBottom="@+id/title_line2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/title_line2" />
 
 </RelativeLayout>

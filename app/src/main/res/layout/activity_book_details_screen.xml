@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="#ff2889ff">
+    android:background="@drawable/bookshelf_frost3">
     <ScrollView
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
@@ -11,7 +11,6 @@
             android:layout_height="fill_parent"
             android:stretchColumns="1"
             android:shrinkColumns="1"
-            android:background="#ff2889ff"
             tools:context=".BookDetails"
             android:id="@+id/detailScreen">
 
@@ -30,7 +29,7 @@
                 android:padding="3dip"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/bookdetails_title"
-                android:textColor="#ffffffff"
+                android:textColor="@android:color/black"
                 android:id="@+id/bookTitle"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -40,14 +39,14 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Catch-22"
                 android:id="@+id/titleText"
-                android:textColor="#ffffffff" />
+                android:textColor="#ff000000" />
         </TableRow>
 
         <TableRow>
             <TextView
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/bookdetails_author"
-                android:textColor="#ffffffff"
+                android:textColor="#ff000000"
                 android:id="@+id/bookAuthor" />
 
             <TextView
@@ -56,7 +55,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Joseph Heller"
                 android:id="@+id/authorText"
-                android:textColor="#ffffffff"
+                android:textColor="#ff000000"
                 android:gravity="right"
                 android:padding="3dip"
                  />
@@ -66,7 +65,7 @@
                 <TextView
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Published:"
-                    android:textColor="#ffffffff"
+                    android:textColor="#ff000000"
                     android:id="@+id/bookPublished" />
 
                 <TextView
@@ -75,7 +74,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="1961"
                     android:id="@+id/PublishedText"
-                    android:textColor="#ffffffff"
+                    android:textColor="#ff000000"
                     android:gravity="right"
                     android:padding="3dip"
                     />
@@ -87,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/bookdetails_collection"
-                android:textColor="#ffffffff"
+                android:textColor="#ff000000"
                 android:id="@+id/collectionTag"/>
 
             <TextView
@@ -98,7 +97,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:id="@+id/collectionText"
-                android:textColor="#ffffffff" />
+                android:textColor="#ff000000" />
         </TableRow>
 
         <TableRow>
@@ -107,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/bookdetails_isbn"
-                android:textColor="#ffffffff"
+                android:textColor="#ff000000"
                 android:id="@+id/bookIsbn" />
             <TextView
                 android:layout_width="wrap_content"
@@ -115,7 +114,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="978-1451626650"
                 android:id="@+id/isbnText"
-                android:textColor="#ffffffff"
+                android:textColor="#ff000000"
                 android:gravity="right"
                 android:padding="3dip" />
         </TableRow>
@@ -125,7 +124,7 @@
                     android:padding="3dip"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Loaned to:"
-                    android:textColor="#ffffffff"
+                    android:textColor="#ff000000"
                     android:id="@+id/loanedTitle"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,7 +134,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Placeholder Name"
                     android:id="@+id/loanedName"
-                    android:textColor="#ffffffff" />
+                    android:textColor="#ff000000" />
             </TableRow>
             <Space
                 android:layout_width="1dp"
@@ -172,7 +171,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Veiw Description"
+                    android:text="View Description"
                     android:id="@+id/buttonDescription" />
             </TableRow>
 

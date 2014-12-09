@@ -26,7 +26,6 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
 
     String q, r;
     int prevId, nextId, currIndex;
-    static int activeColor = 0xff5ff4ff, inActiveColor = 0xeeeeee;
     boolean foundStuff;
     Button prev, next;
     Button[] result;
@@ -70,11 +69,12 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             isbns = new String[10];
             pubdates = new String[10];
             descs = new String[10];
-
+            Log.d(getClass().getName(), "Online query");
             q = searchResultsIntent.getStringExtra("query");
             r = searchResultsIntent.getStringExtra("response");
-            parseText(r);
             numResults = 10;
+            parseText(r);
+
         } else {
             authors = searchResultsIntent.getStringArrayExtra("author");
             titles = searchResultsIntent.getStringArrayExtra("title");
@@ -98,7 +98,6 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                     result[i].setLayoutParams(params);
                     result[i].setTextColor(Color.WHITE);
                     result[i].setTypeface(null, Typeface.BOLD);
-                    result[i].setBackgroundColor(activeColor);
                     result[i].setText(authors[i] + ": \"" + titles[i] + "\"");
                     result[i].setClickable(true);
                     result[i].setOnClickListener(this);
@@ -121,7 +120,6 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             prev.setLayoutParams(pagingParams);
             prev.setTextColor(Color.WHITE);
             prev.setTypeface(null, Typeface.BOLD);
-            prev.setBackgroundColor(inActiveColor);
             prev.setText("<-Prev");
             prev.setClickable(false);
             prev.setOnClickListener(this);
@@ -136,10 +134,8 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
             next.setTypeface(null, Typeface.BOLD);
             next.setText("Next->");
             if (endReached) {
-                next.setBackgroundColor(inActiveColor);
                 next.setClickable(false);
             } else {
-                next.setBackgroundColor(activeColor);
                 next.setClickable(true);
             }
             next.setOnClickListener(this);
@@ -163,7 +159,7 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
         else
             tok = st.nextToken();
 
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < numResults; i++){
             Log.d(getClass().getName(), "Processing book " + i + "...");
 
             if(endList)
@@ -224,19 +220,25 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                     descs[i] = st.nextToken("\"");
                 }
 
+                boolean endOfDesc = false;
                 while(!tok.equals("industryIdentifiers") && !tok.equals("title")) {
                     if(!st.hasMoreTokens()) {
                         endList = true;
                         break;
                     }
                     tok = st.nextToken();
-                    if(descs[i] != null && !descs[i].equals("") && !tok.equals("industryIdentifiers") && !tok.equals("title"))
-                        descs[i] += tok;
+                    if(descs[i] != null && !endOfDesc && !descs[i].equals("") && !tok.equals("industryIdentifiers") && !tok.equals("title")) {
+                        if(tok.contains("}"))
+                            endOfDesc = true;
+                        else
+                            descs[i] += tok;
+                    }
                 }
                 if(descs[i] != null && !descs[i].equals("")) {
                     descs[i] = descs[i].replaceAll("\\\\", "\""); //fix quotes
                     descs[i] = descs[i].trim();
-                    descs[i] = descs[i].substring(0, descs[i].length() - 1); //remove end-of-field comma
+                    if(!endOfDesc)
+                        descs[i] = descs[i].substring(0, descs[i].length() - 1); //remove end-of-field comma
                 }
 
 
@@ -329,17 +331,13 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                             endReached = true;
                     }
                     if (currIndex > 0) {
-                        prev.setBackgroundColor(activeColor);
                         prev.setClickable(true);
                     } else {
-                        prev.setBackgroundColor(inActiveColor);
                         prev.setClickable(false);
                     }
                     if (endReached) {
-                        next.setBackgroundColor(inActiveColor);
                         next.setClickable(false);
                     } else {
-                        next.setBackgroundColor(activeColor);
                         next.setClickable(true);
                     }
                     layout.addView(pagingLayout);
