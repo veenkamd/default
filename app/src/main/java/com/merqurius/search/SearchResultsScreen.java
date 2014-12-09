@@ -415,8 +415,7 @@ public class SearchResultsScreen extends Activity implements View.OnClickListene
                 break;
             case R.id.menuCollections: startActivity(new Intent(this, CollectionsScreen.class));
                 break;
-            case R.id.action_settings:
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

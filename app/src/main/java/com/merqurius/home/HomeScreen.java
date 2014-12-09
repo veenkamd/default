@@ -75,8 +75,7 @@ public class HomeScreen extends Activity implements View.OnClickListener {
                 break;
             case R.id.menuCollections: startActivity(new Intent(this, CollectionsScreen.class));
                 break;
-            case R.id.action_settings:
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

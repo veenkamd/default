@@ -1,11 +1,14 @@
 package com.merqurius.search;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.merqurius.R;
+import com.merqurius.collections.CollectionsScreen;
+import com.merqurius.home.HomeScreen;
 
 
 public class SearchResults extends Activity {
@@ -26,9 +29,12 @@ public class SearchResults extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.menuHome: startActivity(new Intent( this, HomeScreen.class));
+                break;
+            case R.id.menuCollections: startActivity(new Intent(this, CollectionsScreen.class));
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

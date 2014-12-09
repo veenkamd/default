@@ -128,18 +128,18 @@ public class SearchScreen extends Activity implements View.OnClickListener {
 
 
             Log.d(getClass().getName(), "Result received.");
-            Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
-            searchResultsIntent.putExtra("author", authors);
-            searchResultsIntent.putExtra("title", titles);
-            searchResultsIntent.putExtra("isbn", isbns);
-            searchResultsIntent.putExtra("published", pubdates);
-            searchResultsIntent.putExtra("description", descs);
-            searchResultsIntent.putExtra("img", imgurls);
-            searchResultsIntent.putExtra("collection", collections);
-            searchResultsIntent.putExtra("mode", false);
-            startActivityForResult(searchResultsIntent, 0);
 
         }
+        Intent searchResultsIntent = new Intent(v.getContext(), SearchResultsScreen.class);
+        searchResultsIntent.putExtra("author", authors);
+        searchResultsIntent.putExtra("title", titles);
+        searchResultsIntent.putExtra("isbn", isbns);
+        searchResultsIntent.putExtra("published", pubdates);
+        searchResultsIntent.putExtra("description", descs);
+        searchResultsIntent.putExtra("img", imgurls);
+        searchResultsIntent.putExtra("collection", collections);
+        searchResultsIntent.putExtra("mode", false);
+        startActivityForResult(searchResultsIntent, 0);
     }
 
     private String buildQuery(String t, String a, String i) {
@@ -198,8 +198,7 @@ public class SearchScreen extends Activity implements View.OnClickListener {
                 break;
             case R.id.menuCollections: startActivity(new Intent(this, CollectionsScreen.class));
                 break;
-            case R.id.action_settings:
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

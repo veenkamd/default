@@ -64,8 +64,7 @@ public class SearchScanScreen extends Activity {
                 break;
             case R.id.menuCollections: startActivity(new Intent(this, CollectionsScreen.class));
                 break;
-            case R.id.action_settings:
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
