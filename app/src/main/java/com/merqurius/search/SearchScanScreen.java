@@ -94,16 +94,18 @@ public class SearchScanScreen extends Activity {
                      detailsIntent.putExtra("collection", collection);
                      startActivityForResult(detailsIntent, 0);
                  } else {
-                     builder.setMessage("The barcode scanned does not match any available ISBN.");
-                     builder.show();
+                     Toast.makeText(context, "The barcode scanned does not match any available ISBN.",
+                             Toast.LENGTH_LONG).show();
+                     Intent homeIntent = new Intent(context, HomeScreen.class);
+                     startActivityForResult(homeIntent, 0);
                  }
              } else {
                 builder.setMessage(r);
                 builder.show();
              }
         } else {
-            builder.setMessage("The scan did not work. Please try again.");
-            builder.show();
+            Toast.makeText(context, "The scan did not work. Please try again.",
+                    Toast.LENGTH_LONG).show();
             Intent homeIntent = new Intent(context, HomeScreen.class);
             startActivityForResult(homeIntent, 0);
         }
