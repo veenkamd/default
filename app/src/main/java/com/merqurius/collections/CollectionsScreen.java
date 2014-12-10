@@ -265,7 +265,7 @@ public class CollectionsScreen extends Activity {
                     // set collections_rename_collection.xml to alertDialog builder
                     alertDialogBuilder.setView(promptsView);
 
-                    final EditText userInput = (EditText) promptsView.findViewById(R.id.newCollectionInput);
+                    final EditText userInput = (EditText) promptsView.findViewById(R.id.renameCollectionInput);
 
                     // set dialog message
                     alertDialogBuilder
