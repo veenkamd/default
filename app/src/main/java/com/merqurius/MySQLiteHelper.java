@@ -50,6 +50,12 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         //cv.put(COLLECTION_ID, "");
         db.update(Database.COLLECTION_TBL, cv, Database.WHERE_COLLECTION_NAME,
                   new String[]{collectionName});
+
+        cv = new ContentValues();
+        cv.put(Database.COLLECTION, newCollectionName);
+        db.update(Database.BOOK_TBL, cv, Database.WHERE_COLLECTION,
+                new String[]{collectionName});
+
         db.close();
     }
 
