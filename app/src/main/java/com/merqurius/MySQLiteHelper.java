@@ -43,6 +43,17 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void renameCollection(String collectionName, String newCollectionName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(Database.COLLECTION_NAME, newCollectionName);
+        //cv.put(COLLECTION_ID, "");
+        db.update(Database.COLLECTION_TBL, cv, Database.WHERE_COLLECTION_NAME,
+                  new String[]{collectionName});
+        db.close();
+    }
+
+
     public Cursor selectAllCollections(){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(Database.SELECT_ALL_COLLECTIONS, new String[]{});
@@ -105,5 +116,19 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         cv.put(Database.LOANED_TO, book.getLoaned_to());
         Log.d("Loaning " + book.getIsbn() + "to", book.getLoaned_to());
         return db.update(Database.BOOK_TBL, cv, Database.WHERE_ISBN, new String[]{book.getIsbn()});
+    }
+
+    public void deleteBook(String title, String collection){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Database.BOOK_TBL, Database.WHERE_TITLE + " AND " + Database.WHERE_COLLECTION,
+                new String[]{title,collection});
+        db.close();
+    }
+
+    public void deleteCollection(String collectionName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(Database.BOOK_TBL, Database.WHERE_COLLECTION, new String[]{collectionName});
+        db.delete(Database.COLLECTION_TBL, Database.WHERE_COLLECTION_NAME, new String[]{collectionName});
+        db.close();
     }
 }

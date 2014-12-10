@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -188,6 +189,124 @@ public class CollectionsScreen extends Activity {
                 }
 
 
+
+                return false;
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                class MyOnClickListener implements DialogInterface.OnClickListener {
+                    String title;
+                    String collection;
+                    MyOnClickListener(String title, String collection){
+                        this.title = title;
+                        this.collection = collection;
+                    }
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id){
+                    }
+                }
+
+                if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+                    int groupPosition = ExpandableListView.getPackedPositionGroup(id);
+                    int childPosition = ExpandableListView.getPackedPositionChild(id);
+
+                    String title = collectionDataChild.get(collectionDataHeader.get(groupPosition)).get(childPosition);
+                    String collection = collectionDataHeader.get(groupPosition);
+
+                    // get collection_prompt.xml view
+                    LayoutInflater li = LayoutInflater.from(context);
+                    View promptsView = li.inflate(R.layout.collections_delete_book, null);
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                    // set collections_prompt.xml to alertDialog builder
+                    alertDialogBuilder.setView(promptsView);
+
+                    // set dialog message
+                    alertDialogBuilder
+                            .setCancelable(true)
+                            .setPositiveButton("OK",
+                                    new MyOnClickListener(title, collection) {
+                                        public void onClick(DialogInterface dialog,int id) {
+                                            MySQLiteHelper db = new MySQLiteHelper(context);
+                                            db.deleteBook(this.title, this.collection);
+
+                                            Intent intent = getIntent();
+                                            finish();
+                                            startActivity(intent);
+                                        }
+                                    })
+                            .setNegativeButton("Cancel",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                    // Return true as we are handling the event.
+                    return true;
+                } else if(ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
+                    int groupPosition = ExpandableListView.getPackedPositionGroup(id);
+                    String collection = collectionDataHeader.get(groupPosition);
+
+                    // get collections_rename_collection view
+                    LayoutInflater li = LayoutInflater.from(context);
+                    View promptsView = li.inflate(R.layout.collections_rename_collection, null);
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                    // set collections_rename_collection.xml to alertDialog builder
+                    alertDialogBuilder.setView(promptsView);
+
+                    final EditText userInput = (EditText) promptsView.findViewById(R.id.newCollectionInput);
+
+                    // set dialog message
+                    alertDialogBuilder
+                            .setCancelable(true)
+                            .setPositiveButton("OK",
+                                    new MyOnClickListener("", collection) {
+                                        public void onClick(DialogInterface dialog,int id) {
+                                            String newCollection = userInput.getText().toString();
+
+                                            MySQLiteHelper db = new MySQLiteHelper(context);
+                                            db.renameCollection(this.collection, newCollection);
+
+                                            Intent intent = getIntent();
+                                            finish();
+                                            startActivity(intent);
+                                        }
+                                    })
+                            .setNeutralButton("Cancel",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog,int id) {
+                                            dialog.cancel();
+                                        }
+                                    })
+                            .setNegativeButton("Delete Collection",
+                                    new MyOnClickListener("", collection) {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            MySQLiteHelper db = new MySQLiteHelper(context);
+                                            db.deleteCollection(this.collection);
+
+                                            Intent intent = getIntent();
+                                            finish();
+                                            startActivity(intent);
+                                        }
+                                    });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                    // Return true as we are handling the event.
+                    return true;
+                }
 
                 return false;
             }

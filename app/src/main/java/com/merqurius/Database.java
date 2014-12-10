@@ -17,6 +17,9 @@ public final class Database {
     public static final String RATING      = "rating";
 
     public static final String WHERE_ISBN = "isbn = ?";
+    public static final String WHERE_TITLE = "title = ?";
+    public static final String WHERE_COLLECTION = "collection = ?"; //used in Book Table
+    public static final String WHERE_COLLECTION_NAME = "collection_name = ?"; //Collection Table
 
     //Collection Table Column Names
     public static final String COLLECTION_TBL = "collection";
